@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Question } from './question.model';
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-front-question',
@@ -6,11 +9,18 @@ import { Component, OnInit } from '@angular/core';
     <p>question works!</p>
   `,
 })
-export class QuestionComponent implements OnInit {
+export class QuestionComponent {
+  questionForm: FormGroup;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    private _fb: FormBuilder,
+    private _questionService: QuestionService
+  ) {
+    this.createForm();
   }
 
+  createForm() {
+    // TODO: error, ne comprend pas les array, il faut faire un form array (voir pour automatiser
+    // this.questionForm = this._fb.group(this._questionService.get());
+  }
 }
