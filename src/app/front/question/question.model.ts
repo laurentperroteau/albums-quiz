@@ -6,25 +6,25 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, Validators } from
 export class Question {
   id?: number;
   label: string;
-  choices: QuestionChoices[] = [];
+  radio?: QuestionRadio;
 
-  constructor(objRaw?: Partial<Question>) {
-    const objDefault: Partial<Question> = {
+  constructor(objRaw?: Partial<any>) {
+    const objDefault: Partial<any> = {
       id: null,
       label: '',
-      choices: []
+      radio: null
     };
 
     _.merge(this, objDefault, objRaw);
 
-    for (let i = 0; i < 3; i++) {
-      this.choices.push({label: 'Lorem ipsum'});
-    }
+    /*for (let i = 0; i < 3; i++) {
+      this.choices.push({key: 'lorem', label: 'Lorem ipsum'});
+    }*/
   }
 }
 
 type keyOfQuestion = keyof Question;
-const REQUIRED: keyOfQuestion[] = ['label', 'choices'];
+const REQUIRED: keyOfQuestion[] = ['label', 'radio'];
 const DISABLED: keyOfQuestion[] = [];
 
 export class QuestionForm extends Question {
@@ -32,33 +32,38 @@ export class QuestionForm extends Question {
   constructor(fbInstance: FormBuilder, objRaw?: Partial<Question>) {
     super(objRaw);
 
-    const form = convertObjToForm(this, fbInstance);
-    // TODO: return
+    _.merge(this, convertModelToForm(this, fbInstance));
   }
 }
 
-function convertObjToForm(Obj, fbInstance) {
+function convertModelToForm(Obj, fbInstance) {
   const form = {};
 
   Object.keys(Obj).forEach((key: keyOfQuestion) => {
-    form[key] = convertObjToControl(Obj[key], key, fbInstance);
+    form[key] = convertModelToControl(Obj[key], key, fbInstance);
   });
 
   return form;
 }
 
-export class QuestionChoices {
+export class QuestionRadio {
+  choices: QuestionRadioChoices;
+  response: string;
+}
+
+export class QuestionRadioChoices {
+  key: string;
   label: string;
 }
 
 // TODO: move
-function convertObjToControl(data, key, fbInstance): any {
+function convertModelToControl(data, key, fbInstance): any {
   let control: FormControl | FormArray;
 
   if (_.isArray(data)) {
     const arrayControl: FormControl[] = [];
     data.forEach(item => {
-      arrayControl.push(convertObjToControl(item, key, fbInstance));
+      arrayControl.push(convertModelToControl(item, key, fbInstance));
     });
 
     control = fbInstance.array(arrayControl);
