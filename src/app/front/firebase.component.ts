@@ -4,12 +4,14 @@ import { Component } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Album, Albums, User, UserAlbums } from './db.model';
 
 interface FirebaseItem {
   readonly uid: string;
   $exists: Function;
   $key: string;
 }
+
 interface Posts extends FirebaseItem {
   body: string;
   starCount: number;
@@ -37,22 +39,46 @@ interface Posts extends FirebaseItem {
       <button (click)="addStar()">Add start</button>
       <br/>
       root object {{ (rootObject | async)?.name}}
+      <hr/>
+      <h2>Albums Quiz Database</h2>
+      <button (click)="addAlbum()">Add album</button>
+      <button (click)="addUserToFirstAlbum()">Add user to first album</button>
   `,
 })
 export class FirebaseComponent {
   user: Observable<firebase.User>;
   posts: FirebaseListObservable<Posts[]>;
   rootObject: FirebaseObjectObservable<any>;
+  // Album db
+  albums: FirebaseListObservable<Album[]>;
+  userAlbums: FirebaseListObservable<any[]>;
 
   constructor(db: AngularFireDatabase,
               public afAuth: AngularFireAuth) {
     this.user = afAuth.authState;
     this.posts = db.list('/posts');
-    console.log(this.posts);
-    this.posts.subscribe(r => console.log(r));
+    // this.posts.subscribe(r => console.log(r));
 
     this.rootObject = db.object('/root_object2');
-    this.rootObject.subscribe(r => console.log(r));
+    // this.rootObject.subscribe(r => console.log(r));
+
+    this.albums = db.list('/' + Albums.node);
+    this.userAlbums = db.list('/' + UserAlbums.node);
+  }
+
+  addAlbum() {
+    this.albums.push({name: 'In the court of Crimson King', year: 1970}).then(test => {
+    console.log(test);
+    });
+  }
+
+  addUserToFirstAlbum() {
+    this.albums.push({name: 'In the court of Crimson King', year: 1970}).then((ref: firebase.database.ThenableReference) => {
+      this.user.subscribe((u: User) => {
+        // TODO: a suivre, comment ajouter une relation
+        // this.userAlbums.update(u.uid, ref.key);
+      })
+    });
   }
 
   addPost() {
@@ -60,7 +86,7 @@ export class FirebaseComponent {
   }
 
   addStar() {
-    this.posts.update(this.posts[0].$key, { starCount: ++this.posts[0].starCount});
+    this.posts.update(this.posts[0].$key, {starCount: ++this.posts[0].starCount});
   }
 
   login() {
