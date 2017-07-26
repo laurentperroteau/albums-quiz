@@ -6,13 +6,15 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, Validators } from
 export class Question {
   id?: number;
   label: string;
-  radio?: QuestionRadio;
+  radios?: QuestionRadios;
+  radioResponse?: string;
 
   constructor(objRaw?: Partial<any>) {
     const objDefault: Partial<any> = {
       id: null,
       label: '',
-      radio: null
+      radios: null,
+      radioResponse: null
     };
 
     _.merge(this, objDefault, objRaw);
@@ -24,7 +26,7 @@ export class Question {
 }
 
 type keyOfQuestion = keyof Question;
-const REQUIRED: keyOfQuestion[] = ['label', 'radio'];
+const REQUIRED: keyOfQuestion[] = ['label', 'radios'];
 const DISABLED: keyOfQuestion[] = [];
 
 export class QuestionForm extends Question {
@@ -46,12 +48,9 @@ function convertModelToForm(Obj, fbInstance) {
   return form;
 }
 
-export class QuestionRadio {
-  choices: QuestionRadioChoices;
-  response: string;
-}
 
-export class QuestionRadioChoices {
+
+export class QuestionRadios {
   key: string;
   label: string;
 }

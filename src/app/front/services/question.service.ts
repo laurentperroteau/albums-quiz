@@ -23,15 +23,12 @@ export class QuestionService {
         {
           id: 2,
           label: `Quelle est la variété de la banane sur l'album ?`,
-          radio: {
-            choices: [
-              { key: 'plantain', label: 'Plantain' },
-              { key: 'cavendish', label: 'Cavendish' },
-            ],
-            response: 'plantain'
-          }
+          radios:  [
+            { key: 'plantain', label: 'Plantain' },
+            { key: 'cavendish', label: 'Cavendish' },
+          ]
         } as any
       )
-    );
+    );  // TODO: fix any
   }
 }

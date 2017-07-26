@@ -9,15 +9,13 @@ import { QuestionService } from '../services/question.service';
     <form [formGroup]="questionForm">
       <input formControlName="id" />
       <input formControlName="label" />
-      <div formArrayName="radio">
-        {{ radio.value }}
-        <!-- TODO: utiliser composant radio angular material -->
-        <!--<div *ngFor="let choice of radio.controls; let i = index">
-          {{ i }}
-          <input [formControlName]="i" type="radio" [value]="choice.value" [id]="choice.value.key" [checked]="choices.value === vhoi" />
-          <label [for]="choice.value.key">{{ choice.value.label }}</label>
-        </div>-->
-      </div>
+      <md-radio-group formControlName="radioResponse">
+        <div formArrayName="radios">
+          <md-radio-button *ngFor="let radio of radios.controls;" [value]="radio.value">
+            {{ radio.value.label }}
+          </md-radio-button>
+        </div>
+      </md-radio-group>
     </form>
     <pre>{{ questionForm.value | json }}</pre>
   `,
@@ -25,7 +23,7 @@ import { QuestionService } from '../services/question.service';
 export class QuestionComponent {
   questionForm: FormGroup;
 
-  get radio(): FormArray { return this.questionForm.get('radio') as FormArray; }
+  get radios(): FormArray { return this.questionForm.get('radios') as FormArray; }
 
   constructor(
     private _fb: FormBuilder,
@@ -37,6 +35,7 @@ export class QuestionComponent {
   createForm() {
     this._questionService.getAsForm().subscribe(q => {
       this.questionForm = this._fb.group(q);
+      console.log(this.questionForm);
     });
   }
 }

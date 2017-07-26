@@ -1,6 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 
@@ -22,7 +23,7 @@ export const ROUTES: Routes = [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserAnimationsModule,
     RouterModule,
     RouterModule.forRoot(ROUTES)
   ],
