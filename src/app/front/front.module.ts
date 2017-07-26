@@ -8,6 +8,7 @@ import { MdRadioModule } from '@angular/material';
 import { QuestionComponent } from './question/question.component';
 import { QuestionService } from './services/question.service';
 
+import { FirebaseComponent } from './firebase.component';
 // routes
 export const ROUTES: Routes = [
   { path: '', component: QuestionComponent }
@@ -22,7 +23,8 @@ export const ROUTES: Routes = [
     MdRadioModule,
   ],
   declarations: [
-    QuestionComponent
+    QuestionComponent,
+    FirebaseComponent
   ],
   providers: [QuestionService]
 })
