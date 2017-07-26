@@ -1,4 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { QuestionService } from './question.service';
 import { Question } from '../question/question.model';
@@ -6,7 +7,10 @@ import { Question } from '../question/question.model';
 describe('QuestionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [QuestionService]
+      providers: [
+        FormBuilder,
+        QuestionService
+      ]
     });
   });
 
