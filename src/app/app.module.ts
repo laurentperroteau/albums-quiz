@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MdToolbarModule } from '@angular/material';
+
 import { AppComponent } from './app.component';
 
 // app.module.ts
@@ -25,7 +27,8 @@ export const ROUTES: Routes = [
   imports: [
     BrowserAnimationsModule,
     RouterModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    MdToolbarModule
   ],
   exports: [
     RouterModule
