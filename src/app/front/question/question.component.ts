@@ -35,22 +35,8 @@ export class QuestionComponent {
   }
 
   createForm() {
-    const question = new QuestionForm(
-      this._fb,
-      {
-        id: 2,
-        label: `Quelle est la variété de la banane sur l'album ?`,
-        radio: {
-          choices: [
-            { key: 'plantain', label: 'Plantain' },
-            { key: 'cavendish', label: 'Cavendish' },
-          ],
-          response: 'plantain'
-        }
-      } as any
-    );
-    console.log(question);
-    this.questionForm = this._fb.group(question);
-    console.log(this.questionForm);
+    this._questionService.getAsForm().subscribe(q => {
+      this.questionForm = this._fb.group(q);
+    });
   }
 }
