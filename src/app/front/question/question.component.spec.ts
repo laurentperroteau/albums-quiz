@@ -1,8 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionComponent } from './question.component';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { QuestionService } from '../services/question.service';
+import { MdRadioModule } from '@angular/material';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('QuestionComponent', () => {
   let component: QuestionComponent;
@@ -10,11 +12,20 @@ describe('QuestionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      schemas: [
+        NO_ERRORS_SCHEMA
+      ],
+      imports: [
+        ReactiveFormsModule,
+        MdRadioModule
+      ],
       providers: [
         FormBuilder,
         QuestionService
       ],
-      declarations: [ QuestionComponent ]
+      declarations: [
+        QuestionComponent
+      ]
     })
     .compileComponents();
   }));

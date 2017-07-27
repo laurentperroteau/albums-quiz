@@ -18,6 +18,8 @@ import { QuestionService } from '../services/question.service';
       </md-radio-group>
     </form>
     <pre>{{ questionForm.value | json }}</pre>
+    <hr />
+    <app-firebase></app-firebase>
   `,
 })
 export class QuestionComponent {
