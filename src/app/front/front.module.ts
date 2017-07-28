@@ -8,6 +8,10 @@ import { MdRadioModule } from '@angular/material';
 import { QuestionComponent } from './question/question.component';
 import { QuestionService } from './services/question.service';
 
+import { UserService } from './user.service';
+import { AlbumService } from './album.service';
+import { UserAlbumsService } from './usersAlbums.service';
+
 import { FirebaseComponent } from './firebase.component';
 // routes
 export const ROUTES: Routes = [
@@ -26,6 +30,11 @@ export const ROUTES: Routes = [
     QuestionComponent,
     FirebaseComponent
   ],
-  providers: [QuestionService]
+  providers: [
+    UserService,
+    AlbumService,
+    UserAlbumsService,
+    QuestionService,
+  ]
 })
 export class FrontModule { }

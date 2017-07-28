@@ -1,10 +1,20 @@
 import * as _ from 'lodash';
 
-type UidRelation = string;
+export type Ref = string | null;
 
 class FirebaseNode {
-  readonly $key?: string; // === uid in database
+  readonly $key?: Ref; // === uid in database
   $exists?: Function;
+}
+
+class BaseNode extends FirebaseNode {
+  createdAt?: Date;
+  updatedAt?: Date;
+
+  constructor() {
+    super();
+    // this.createdAt = new Date();
+  }
 }
 
 export const Albums = {
@@ -12,7 +22,7 @@ export const Albums = {
   // [key: string]: Album;
 };
 
-export class Album extends FirebaseNode {
+export class Album extends BaseNode {
   name: string;
   year: number;
 
@@ -22,22 +32,23 @@ export class Album extends FirebaseNode {
   }
 }
 
-export interface Users {
+/*export interface Users {
   [key: string]: User;
 }
 
 // User created by google connect
-export class User extends FirebaseNode {
+export class User extends BaseNode {
   uid: string;
   displayName: string;
   email: string;
-}
+}*/
 
 // GET liste d'album par user => user-albums/userKey
 // POST d'une relation => user-albums/userKey/albumKey
 export const UserAlbums = {
   node: 'user-albums'
+};
+
+export interface UserAlbums extends BaseNode {
+  $value: string; // album title
 }
-/*export interface UserAlbums {
-  [key: string]: UidRelation;
-}*/
