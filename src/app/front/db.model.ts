@@ -17,11 +17,6 @@ class BaseNode extends FirebaseNode {
   }
 }
 
-export const Albums = {
-  node: 'albums'
-  // [key: string]: Album;
-};
-
 export class Album extends BaseNode {
   name: string;
   year: number;
@@ -45,10 +40,20 @@ export class User extends BaseNode {
 
 // GET liste d'album par user => user-albums/userKey
 // POST d'une relation => user-albums/userKey/albumKey
-export const UserAlbums = {
-  node: 'user-albums'
-};
-
 export interface UserAlbums extends BaseNode {
   $value: string; // album title
 }
+
+/* Exemple d'interface de array/object (de lodash)
+interface List<T> {
+  [index: number]: T;
+  length: number;
+}
+
+interface Dictionary<T> {
+  [index: string]: T;
+}
+
+interface NumericDictionary<T> {
+  [index: number]: T;
+}*/

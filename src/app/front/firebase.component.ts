@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Album, Albums, Ref, UserAlbums } from './db.model';
-import { AlbumService } from './album.service';
-import { UserAlbumsService } from './usersAlbums.service';
+import { Album, Ref, UserAlbums } from './db.model';
+import { AlbumsService } from './album.service';
+import { UserAlbumsService } from './userAlbums.service';
 import { UserService } from './user.service';
 
 interface FirebaseItem {
@@ -49,6 +49,12 @@ interface Posts extends FirebaseItem {
         {{ album.name }} ({{ album.year }})
       </li>
     </ul>
+    <h3>Albums by user :</h3>
+    <ul>
+      <li *ngFor="let album of albumsByUser$ | async ">
+        {{ album.name }} ({{ album.year }})
+      </li>
+    </ul>
   `,
 })
 export class FirebaseComponent {
@@ -59,6 +65,7 @@ export class FirebaseComponent {
   rootObject: FirebaseObjectObservable<any>;
   // Album db
   albums$: FirebaseListObservable<Album[]>;
+  albumsByUser$: any;
   userAlbums$: FirebaseListObservable<any[]>;
 
   albumCreated: Ref;
@@ -66,7 +73,7 @@ export class FirebaseComponent {
   constructor(
     private _db: AngularFireDatabase,
     private _userService: UserService,
-    private _albumService: AlbumService,
+    private _albumService: AlbumsService,
     private _usersAlbumsService: UserAlbumsService,
   ) {
     this.user = this._userService.get();
@@ -76,8 +83,8 @@ export class FirebaseComponent {
     this.rootObject = this._db.object('/root_object2');
     // this.rootObject.subscribe(r => console.log(r));
 
-    this.albums$ = this._db.list('/' + Albums.node);
-    this.userAlbums$ = this._db.list('/' + UserAlbums.node);
+    this.albums$ = this._db.list('/albums');
+    // this.userAlbums$ = this._db.list('/' + UserAlbums.node);
   }
 
   /*addAlbum() {
@@ -92,11 +99,14 @@ export class FirebaseComponent {
   }
 
   getAlbumsByUser() {
-    this._usersAlbumsService.getAlbumnsRefsConnectedUser().subscribe(r => console.log(r))
+    this._usersAlbumsService.getAlbumnsRefsConnectedUser().subscribe((u: UserAlbums[]) => {
+      // TODO: voir créer un services parent pour les albumns (éviter circular dependencies)
+      this.albumsByUser$ = this._albumService.getListByRefs(u.map(a => a.$key));
+    })
   }
 
   getAlbumnsConnectedUser() {
-    this._usersAlbumsService.getAlbumnsConnectedUser().subscribe(r => console.log(r))
+    // this._usersAlbumsService.getAlbumsByConnectedUser().subscribe(r => console.log(r))
   }
 
   addPost() {

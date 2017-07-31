@@ -7,35 +7,37 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 import { UserService } from './user.service';
 
-import { Album, Albums, Ref, UserAlbums } from './db.model';
-import { AlbumService } from './album.service';
+import { Album, Ref, UserAlbums } from './db.model';
+import { AlbumsService } from './album.service';
 
 @Injectable()
 export class UserAlbumsService {
+  readonly node = 'user-albums';
   user: firebase.User;
 
   constructor(
     private _db: AngularFireDatabase,
     private _userService: UserService,
-    private _albumService: AlbumService,
+    // private _albumService: AlbumsService,
   ) {
     this._userService.get().subscribe(u => this.user = u);
     // this.userAlbums$ = this._db.list('/' + UserAlbums.node).lift()
   }
 
   setAlbumToUser(album: Album, newAlbumRef: firebase.database.ThenableReference) {
-    this._db.object(`${UserAlbums.node}/${this.user.uid}/${newAlbumRef.key}`).set(album.name);
+    this._db.object(`${this.node}/${this.user.uid}/${newAlbumRef.key}`).set(album.name);
   }
 
   getAlbumnsRefsConnectedUser(): FirebaseListObservable<UserAlbums[]> {
-    return this._db.list(`${UserAlbums.node}/${this.user.uid}`);
+    return this._db.list(`${this.node}/${this.user.uid}`);
   }
 
-  getAlbumnsConnectedUser(): any {
-    return this._db.list(`${UserAlbums.node}/${this.user.uid}`)
-      .flatMap((ua: UserAlbums) => {
-        // TODO
-        return this._albumService.get(ua.$key);
+  getAlbumsByConnectedUser(): any {
+    console.log(`${this.node}/${this.user.uid}`);
+    return this._db.list(`${this.node}/${this.user.uid}`)
+      .map((ua: UserAlbums) => {
+        console.log('flat', ua);
+        return // this._albumService.get(ua.$key);
     });
   }
 }

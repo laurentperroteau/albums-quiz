@@ -9,8 +9,8 @@ import { QuestionComponent } from './question/question.component';
 import { QuestionService } from './services/question.service';
 
 import { UserService } from './user.service';
-import { AlbumService } from './album.service';
-import { UserAlbumsService } from './usersAlbums.service';
+import { AlbumsService } from './album.service';
+import { UserAlbumsService } from './userAlbums.service';
 
 import { FirebaseComponent } from './firebase.component';
 // routes
@@ -32,7 +32,7 @@ export const ROUTES: Routes = [
   ],
   providers: [
     UserService,
-    AlbumService,
+    AlbumsService,
     UserAlbumsService,
     QuestionService,
   ]

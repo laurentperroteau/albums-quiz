@@ -3,19 +3,20 @@ import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 
 import * as firebase from 'firebase/app';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 import { UserService } from './user.service';
 
-import { Album, Albums, Ref, UserAlbums } from './db.model';
-import { UserAlbumsService } from './usersAlbums.service';
+import { Album, Ref, UserAlbums } from './db.model';
+import { UserAlbumsService } from './userAlbums.service';
 
+// TODO: créer un classe parente qui match les erreur
 @Injectable()
-export class AlbumService {
+export class AlbumsService {
+  node = 'albums';
   user: firebase.User;
 
   albums$: FirebaseListObservable<Album[]>;
-  userAlbums$: FirebaseListObservable<any[]>;
 
   constructor(
     private _db: AngularFireDatabase,
@@ -23,7 +24,7 @@ export class AlbumService {
     private _usersAlbumService: UserAlbumsService,
   ) {
     this._userService.get().subscribe(u => this.user = u);
-    this.albums$ = this._db.list('/' + Albums.node);
+    this.albums$ = this._db.list('/' + this.node);
     // this.userAlbums$ = this._db.list('/' + UserAlbums.node);
   }
 
@@ -38,11 +39,23 @@ export class AlbumService {
     );
   }
 
-  get(ref: Ref) {
-    // TODO: get album by ref
+  getOne(ref: Ref): FirebaseObjectObservable<Album> {
+    return this._db.object(`${this.node}/${ref}`);
   }
 
-  getAlbums(): FirebaseListObservable<Album[]> {
+  getList(): FirebaseListObservable<Album[]> {
     return this.albums$;
+  }
+
+  getListByRefs(refs: Ref[]) {
+    console.log(refs);
+    return this.albums$
+      .map(as => as.filter(a => refs.indexOf(a.$key) !== -1))
+      // Filter ne fonctionne pas, il renvoi la liste complète
+      /*.flatMap(data => data)
+      .filter((a: Album) => {
+        console.log(a);
+        return refs.indexOf(a.$key) !== -1
+      })*/;
   }
 }
