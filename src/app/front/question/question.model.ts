@@ -1,15 +1,36 @@
 import * as _ from 'lodash';
-import { AbstractControl, FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+export class ModelFactory {
+  form: FormGroup;
+
+  createForm(fbInstance: FormBuilder) {
+    this.form = fbInstance.group(convertModelToForm(this, fbInstance));
+  }
+
+  updateForm(fbInstance: FormBuilder) {
+    if (!this.form) {
+      this.createForm(fbInstance);
+    } else {
+      this.form.patchValue(this);
+    }
+  }
+
+  updateWithFormValue() {
+    _.merge(this, this.form.value);
+  }
+}
 
 // TODO: voir déplacer dans shared ou core module ?
 // TODO: add test
-export class Question {
+export class Question extends ModelFactory {
   id?: number;
   label: string;
   radios?: QuestionRadios;
   radioResponse?: string;
 
   constructor(objRaw?: Partial<any>) {
+    super();
     const objDefault: Partial<any> = {
       id: null,
       label: '',
@@ -23,22 +44,29 @@ export class Question {
       this.choices.push({key: 'lorem', label: 'Lorem ipsum'});
     }*/
   }
+
+  // exemple de méthode factory spécifique au model
+  getDuplicata() {
+    const duplicata = Object.assign({}, this);
+    duplicata.id = null;
+    return duplicata;
+  }
 }
 
 type keyOfQuestion = keyof Question;
 const REQUIRED: keyOfQuestion[] = ['label', 'radios'];
 const DISABLED: keyOfQuestion[] = [];
 
-export class QuestionForm extends Question {
+/*export class QuestionForm extends QuestionFactory {
 
   constructor(fbInstance: FormBuilder, objRaw?: Partial<Question>) {
     super(objRaw);
 
     _.merge(this, convertModelToForm(this, fbInstance));
   }
-}
+}*/
 
-function convertModelToForm(Obj, fbInstance) {
+function convertModelToForm(Obj: any, fbInstance: FormBuilder) {
   const form = {};
 
   Object.keys(Obj).forEach((key: keyOfQuestion) => {

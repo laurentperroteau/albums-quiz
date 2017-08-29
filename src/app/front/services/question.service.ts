@@ -3,32 +3,36 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
-import { Question, QuestionForm } from '../question/question.model';
+import { Question } from '../question/question.model';
 
 @Injectable()
 export class QuestionService {
+  question: Question;
 
   constructor(
     private _fb: FormBuilder,
-  ) { }
-
-  get() {
-    return new Question();
+  ) {
+    this.question = new Question({
+      id: 2,
+      label: `Quelle est la variété de la banane sur l'album ?`,
+      radios:  [
+        { key: 'plantain', label: 'Plantain' },
+        { key: 'cavendish', label: 'Cavendish' },
+      ]
+    });
   }
 
-  getAsForm() {
-    return Observable.of(
-      new QuestionForm(
-        this._fb,
-        {
-          id: 2,
-          label: `Quelle est la variété de la banane sur l'album ?`,
-          radios:  [
-            { key: 'plantain', label: 'Plantain' },
-            { key: 'cavendish', label: 'Cavendish' },
-          ]
-        } as any
-      )
-    );  // TODO: fix any
+  get() {
+    return this.question;
+  }
+
+  getWithForm() {
+    this.question.createForm(this._fb);
+    return this.question;
+  }
+
+  save() {
+    this.question.updateWithFormValue();
+    console.log('save', this.question); // TODO: persist
   }
 }

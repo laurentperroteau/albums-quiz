@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Question, QuestionForm } from './question.model';
+import { Question } from './question.model';
 import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-front-question',
   template: `
-    <form [formGroup]="questionForm">
-      <input formControlName="id" />
-      <input formControlName="label" />
+    <form [formGroup]="question.form">
+      <input formControlName="id"/>
+      <input formControlName="label"/>
       <md-radio-group formControlName="radioResponse">
         <div formArrayName="radios">
           <md-radio-button *ngFor="let radio of radios.controls;" [value]="radio.value">
@@ -16,28 +16,26 @@ import { QuestionService } from '../services/question.service';
           </md-radio-button>
         </div>
       </md-radio-group>
+      <button (click)="submit()">Submit</button>
     </form>
-    <pre>{{ questionForm.value | json }}</pre>
-    <hr />
+    <pre>{{ question.form.value | json }}</pre>
+    <hr/>
     <app-firebase></app-firebase>
   `,
 })
 export class QuestionComponent {
-  questionForm: FormGroup;
+  question: Question;
 
-  get radios(): FormArray { return this.questionForm.get('radios') as FormArray; }
+  get radios(): FormArray { return this.question.form.get('radios') as FormArray; }
 
   constructor(
     private _fb: FormBuilder,
     private _questionService: QuestionService
   ) {
-    this.createForm();
+    this.question = this._questionService.getWithForm();
   }
 
-  createForm() {
-    this._questionService.getAsForm().subscribe(q => {
-      this.questionForm = this._fb.group(q);
-      console.log(this.questionForm);
-    });
+  submit() {
+    this._questionService.save();
   }
 }
