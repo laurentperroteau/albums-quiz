@@ -7,19 +7,21 @@ import { Question } from '../question/question.model';
 
 @Injectable()
 export class QuestionService {
-  question: Question;
+  question: Observable<Question>;
 
   constructor(
     private _fb: FormBuilder,
   ) {
-    this.question = new Question({
-      id: 2,
-      label: `Quelle est la variété de la banane sur l'album ?`,
-      radios:  [
-        { key: 'plantain', label: 'Plantain' },
-        { key: 'cavendish', label: 'Cavendish' },
-      ]
-    });
+    this.question = Observable.of(
+      new Question({
+        id: 2,
+        label: `Quelle est la variété de la banane sur l'album ?`,
+        radios:  [
+          { key: 'plantain', label: 'Plantain' },
+          { key: 'cavendish', label: 'Cavendish' },
+        ]
+      })
+    );
   }
 
   get() {
@@ -27,12 +29,16 @@ export class QuestionService {
   }
 
   getWithForm() {
-    this.question.createForm(this._fb);
-    return this.question;
+    return this.question.map(q => {
+      q.createForm(this._fb);
+      return q;
+    });
   }
 
   save() {
-    this.question.updateWithFormValue();
-    console.log('save', this.question); // TODO: persist
+    this.question.map(q => {
+      q.updateWithFormValue();
+      return q;
+    }).subscribe(q => console.log(q)); // TODO : persist ? qui subscribe ?
   }
 }
