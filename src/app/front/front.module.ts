@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdRadioModule } from '@angular/material';
 
 import { QuestionComponent } from './question/question.component';
+import { QuestionFormComponent } from './question/question-form.component';
 import { QuestionService } from './services/question.service';
 
 import { UserService } from './user.service';
@@ -28,6 +29,7 @@ export const ROUTES: Routes = [
   ],
   declarations: [
     QuestionComponent,
+    QuestionFormComponent,
     FirebaseComponent
   ],
   providers: [
