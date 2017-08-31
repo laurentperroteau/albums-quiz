@@ -133,7 +133,11 @@ export class FirebaseComponent {
   }
 
   onUpdate(updatedAlbum: Album) {
-    this.albumToUpdate$.update(updatedAlbum);
+    if (this.albumToUpdate$) {
+      this.albumToUpdate$.update(updatedAlbum); // update method include in Obs replace extra service
+    } else {
+      // this._albumService.create(updatedAlbum); TODO
+    }
   }
 
   login() {

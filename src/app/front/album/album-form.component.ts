@@ -14,7 +14,7 @@ import { Album } from '../db.model';
     </div>
   `,
 })
-export class AlbumFormComponent implements OnInit{
+export class AlbumFormComponent implements OnInit {
   @Input() set album(value: Album) {
     if (value) {
       value.createForm(this._fb);
@@ -23,7 +23,7 @@ export class AlbumFormComponent implements OnInit{
     }
   };
   _album: Album;
-  @Output() onUpdate: EventEmitter<Album> = new EventEmitter();
+  @Output() onUpdate: EventEmitter<Album> = new EventEmitter(); // return new object
 
   submitLabel = 'Créer';
 
@@ -34,7 +34,7 @@ export class AlbumFormComponent implements OnInit{
   }
 
   submit() {
-    this._album.updateWithFormValueAndDeleteForm();
-    this.onUpdate.emit(this._album);
+    const newAlbum = this._album.updateWithFormValueAndDeleteForm();
+    this.onUpdate.emit(newAlbum);
   }
 }

@@ -24,11 +24,13 @@ export class ModelFactory {
 
   updateWithFormValue() {
     _.merge(this, this.form.value);
+    return this;
   }
 
   updateWithFormValueAndDeleteForm() {
     this.updateWithFormValue();
     this.deleteForm();
+    return this;
   }
 
 }
