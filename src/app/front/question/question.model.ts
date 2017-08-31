@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class ModelFactory {
-  form: FormGroup;
+  form?: FormGroup;
 
   createForm(fbInstance: FormBuilder) {
     this.form = fbInstance.group(convertModelToForm(this, fbInstance));
@@ -16,9 +16,21 @@ export class ModelFactory {
     }
   }
 
+  deleteForm() {
+    if (this.form) {
+      delete this.form;
+    }
+  }
+
   updateWithFormValue() {
     _.merge(this, this.form.value);
   }
+
+  updateWithFormValueAndDeleteForm() {
+    this.updateWithFormValue();
+    this.deleteForm();
+  }
+
 }
 
 // TODO: voir déplacer dans shared ou core module ?

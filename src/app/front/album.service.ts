@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 
 import { Injectable } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
@@ -19,6 +20,7 @@ export class AlbumsService {
   albums$: FirebaseListObservable<Album[]>;
 
   constructor(
+    private _fb: FormBuilder,
     private _db: AngularFireDatabase,
     private _userService: UserService,
     private _usersAlbumService: UserAlbumsService,
@@ -40,7 +42,10 @@ export class AlbumsService {
   }
 
   getOne(ref: Ref): FirebaseObjectObservable<Album> {
-    return this._db.object(`${this.node}/${ref}`);
+    return this._db.object(`${this.node}/${ref}`)
+      .map(rawAlbum => {
+        return new Album(rawAlbum);
+      }) as FirebaseObjectObservable<Album>;
   }
 
   getList(): FirebaseListObservable<Album[]> {

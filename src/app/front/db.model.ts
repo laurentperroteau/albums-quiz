@@ -1,8 +1,9 @@
 import * as _ from 'lodash';
+import { ModelFactory } from './question/question.model';
 
 export type Ref = string | null;
 
-class FirebaseNode {
+class FirebaseNode extends ModelFactory {
   readonly $key?: Ref; // === uid in database
   $exists?: Function;
 }
@@ -23,7 +24,13 @@ export class Album extends BaseNode {
 
   constructor(objRaw?: Partial<Album>) {
     super();
-    _.merge(this, objRaw);
+
+    const defaultObj: Partial<Album>  = {
+      name: '',
+      year: null,
+    };
+
+    _.merge(this, defaultObj, objRaw);
   }
 }
 

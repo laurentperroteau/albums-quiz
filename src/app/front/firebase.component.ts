@@ -52,9 +52,16 @@ interface Posts extends FirebaseItem {
     <h3>Albums by user :</h3>
     <ul>
       <li *ngFor="let album of albumsByUser$ | async ">
-        {{ album.name }} ({{ album.year }})
+        <a (click)="editAlbum(album.$key)">
+          {{ album.name }} ({{ album.year }})
+        </a>
       </li>
     </ul>
+    <h2>Album form</h2>
+    <app-front-album-form
+      [album]="(albumToUpdate$ | async)"
+      (onUpdate)="onUpdate($event)">
+    </app-front-album-form>
   `,
 })
 export class FirebaseComponent {
@@ -67,6 +74,7 @@ export class FirebaseComponent {
   albums$: FirebaseListObservable<Album[]>;
   albumsByUser$: any;
   userAlbums$: FirebaseListObservable<any[]>;
+  albumToUpdate$: FirebaseObjectObservable<Album>;
 
   albumCreated: Ref;
 
@@ -94,19 +102,20 @@ export class FirebaseComponent {
   }*/
 
   addUserToFirstAlbum() {
-    const newAlbum = {name: 'The Grand Wazoo', year: 1973};
+    const newAlbum = new Album({ name: 'The Grand Wazoo', year: 1973 });
     this._albumService.add(newAlbum);
   }
 
   getAlbumsByUser() {
+    // TODO: ne pas subscribe dans component mais mapper le résultat
     this._usersAlbumsService.getAlbumnsRefsConnectedUser().subscribe((u: UserAlbums[]) => {
-      // TODO: voir créer un services parent pour les albumns (éviter circular dependencies)
       this.albumsByUser$ = this._albumService.getListByRefs(u.map(a => a.$key));
     })
   }
 
   getAlbumnsConnectedUser() {
-    // this._usersAlbumsService.getAlbumsByConnectedUser().subscribe(r => console.log(r))
+    // TODO: voir créer un services parent pour les albumns (éviter circular dependencies)
+    // this._superAlbumService.getListByConnectedUser().subscribe(r => console.log(r))
   }
 
   addPost() {
@@ -115,6 +124,16 @@ export class FirebaseComponent {
 
   addStar() {
     this.posts.update(this.posts[0].$key, {starCount: ++this.posts[0].starCount});
+  }
+
+  editAlbum(key) {
+    this.albumToUpdate$ = this._albumService.getOne(key);
+    console.log(this.albumToUpdate$);
+    // this.albumToUpdate$.subscribe(a => console.log(a));
+  }
+
+  onUpdate(updatedAlbum: Album) {
+    this.albumToUpdate$.update(updatedAlbum);
   }
 
   login() {

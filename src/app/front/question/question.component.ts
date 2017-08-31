@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
   selector: 'app-front-question',
   template: `
     <app-front-question-form
-      [form]="(question | async)?.form"
+      [form]="(question$ | async)?.form"
       (onSubmit)="submit()">
     </app-front-question-form>
     <hr/>
@@ -15,12 +15,12 @@ import { Observable } from 'rxjs/Observable';
   `,
 })
 export class QuestionComponent {
-  question: Observable<Question>;
+  question$: Observable<Question>;
 
   constructor(
     private _questionService: QuestionService
   ) {
-    this.question = this._questionService.getWithForm();
+    this.question$ = this._questionService.getWithForm();
   }
 
   submit() {

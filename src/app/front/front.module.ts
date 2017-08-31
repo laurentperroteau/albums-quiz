@@ -14,6 +14,8 @@ import { AlbumsService } from './album.service';
 import { UserAlbumsService } from './userAlbums.service';
 
 import { FirebaseComponent } from './firebase.component';
+
+import { AlbumFormComponent } from './album/album-form.component';
 // routes
 export const ROUTES: Routes = [
   { path: '', component: QuestionComponent }
@@ -30,7 +32,8 @@ export const ROUTES: Routes = [
   declarations: [
     QuestionComponent,
     QuestionFormComponent,
-    FirebaseComponent
+    FirebaseComponent,
+    AlbumFormComponent,
   ],
   providers: [
     UserService,
