@@ -7,8 +7,11 @@ import { Component } from '@angular/core';
     <md-toolbar color="primary">
       <span>{{ title }}</span>
       <span class="example-spacer"></span>
-        <button md-button>Répondre aux questions</button>
-        <button md-button>Créer des questions</button>
+        <button md-raised-button color="primary" routerLink="/bo" routerLinkActive="mat-accent">
+          Répondre aux questions
+        </button>
+        &nbsp;
+        <button md-raised-button color="primary">Créer des questions</button>
     </md-toolbar>
     <router-outlet></router-outlet>
   `,

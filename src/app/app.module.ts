@@ -40,6 +40,8 @@ export const ROUTES: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+
+    // Routes
     RouterModule.forRoot(ROUTES),
     MdToolbarModule,
     MdButtonModule,
