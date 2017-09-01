@@ -9,7 +9,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { environment } from '../environments/environment';
 
-import { MdToolbarModule } from '@angular/material';
+import { MdToolbarModule, MdButtonModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 
@@ -41,7 +41,8 @@ export const ROUTES: Routes = [
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     RouterModule.forRoot(ROUTES),
-    MdToolbarModule
+    MdToolbarModule,
+    MdButtonModule,
   ],
   exports: [
     RouterModule
