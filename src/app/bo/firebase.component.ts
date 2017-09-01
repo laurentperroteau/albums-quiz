@@ -58,10 +58,10 @@ interface Posts extends FirebaseItem {
       </li>
     </ul>
     <h2>Album form</h2>
-    <app-front-album-form
+    <app-bo-album-form
       [album]="(albumToUpdate$ | async)"
       (onUpdate)="onUpdate($event)">
-    </app-front-album-form>
+    </app-bo-album-form>
   `,
 })
 export class FirebaseComponent {

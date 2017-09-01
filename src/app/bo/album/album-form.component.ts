@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Album } from '../db.model';
 
 @Component({
-  selector: 'app-front-album-form',
+  selector: 'app-bo-album-form',
   template: `
     <div *ngIf="_album">
       <form [formGroup]="_album.form">

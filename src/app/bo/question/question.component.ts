@@ -4,12 +4,12 @@ import { QuestionService } from '../services/question.service';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'app-front-question',
+  selector: 'app-bo-question',
   template: `
-    <app-front-question-form
+    <app-bo-question-form
       [form]="(question$ | async)?.form"
       (onSubmit)="submit()">
-    </app-front-question-form>
+    </app-bo-question-form>
     <hr/>
     <app-firebase></app-firebase>
   `,

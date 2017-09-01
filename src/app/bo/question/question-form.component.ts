@@ -2,7 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-front-question-form',
+  selector: 'app-bo-question-form',
   template: `
     <form [formGroup]="form">
       <input formControlName="id"/>

@@ -42,4 +42,4 @@ export const ROUTES: Routes = [
     QuestionService,
   ]
 })
-export class FrontModule { }
+export class BoModule { }

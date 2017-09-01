@@ -17,12 +17,12 @@ import { AppComponent } from './app.component';
 export const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: '/front',
+    redirectTo: '/bo',
     pathMatch: 'full'
   },
   {
-    path: 'front',
-    loadChildren: './front/front.module#FrontModule',
+    path: 'bo',
+    loadChildren: './bo/bo.module#BoModule',
   }
 ];
 
