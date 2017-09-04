@@ -7,7 +7,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Album, Ref, UserAlbums } from './db.model';
 import { AlbumsService } from './album.service';
 import { UserAlbumsService } from './userAlbums.service';
-import { UserService } from './user.service';
+import { UserService } from '../core/services/user.service';
 
 interface FirebaseItem {
   readonly uid: string;
@@ -67,7 +67,7 @@ interface Posts extends FirebaseItem {
 export class FirebaseComponent {
   db: AngularFireDatabase;
 
-  user: Observable<firebase.User>;
+  user: firebase.User;
   posts: FirebaseListObservable<Posts[]>;
   rootObject: FirebaseObjectObservable<any>;
   // Album db
@@ -84,7 +84,7 @@ export class FirebaseComponent {
     private _albumService: AlbumsService,
     private _usersAlbumsService: UserAlbumsService,
   ) {
-    this.user = this._userService.get();
+    this.user = this._userService.user;
     this.posts = this._db.list('/posts');
     // this.posts.subscribe(r => console.log(r));
 

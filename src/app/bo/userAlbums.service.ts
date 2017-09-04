@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
-import { UserService } from './user.service';
+import { UserService } from '../core/services/user.service';
 
 import { Album, Ref, UserAlbums } from './db.model';
 import { AlbumsService } from './album.service';
@@ -20,7 +20,8 @@ export class UserAlbumsService {
     private _userService: UserService,
     // private _albumService: AlbumsService,
   ) {
-    this._userService.get().subscribe(u => this.user = u);
+    // this.user = this._userService.get();
+    // this._userService.get().subscribe(u => this.user = u);
     // this.userAlbums$ = this._db.list('/' + UserAlbums.node).lift()
   }
 

@@ -27,5 +27,4 @@ import { AlbumListComponent } from './album-list/album-list.component';
     AlbumListComponent,
   ]
 })
-// TODO: voir créer core module pour les services entres autres : https://angular.io/guide/ngmodule#the-core-module
 export class SharedModule { }

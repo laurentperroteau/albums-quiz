@@ -6,7 +6,7 @@ import { QuestionComponent } from './question/question.component';
 import { QuestionFormComponent } from './question/question-form.component';
 import { QuestionService } from './services/question.service';
 
-import { UserService } from './user.service';
+import { UserService } from '../core/services/user.service';
 import { AlbumsService } from './album.service';
 import { UserAlbumsService } from './userAlbums.service';
 

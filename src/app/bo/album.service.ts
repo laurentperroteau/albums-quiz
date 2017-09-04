@@ -6,7 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
-import { UserService } from './user.service';
+import { UserService } from '../core/services/user.service';
 
 import { Album, Ref, UserAlbums } from './db.model';
 import { UserAlbumsService } from './userAlbums.service';
@@ -25,7 +25,7 @@ export class AlbumsService {
     private _userService: UserService,
     private _usersAlbumService: UserAlbumsService,
   ) {
-    this._userService.get().subscribe(u => this.user = u);
+    // this.user = this._userService.user;
     this.albums$ = this._db.list('/' + this.node);
     // this.userAlbums$ = this._db.list('/' + UserAlbums.node);
   }
