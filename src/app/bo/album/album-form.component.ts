@@ -14,7 +14,7 @@ import { Album } from '../db.model';
     </div>
   `,
 })
-export class AlbumFormComponent implements OnInit {
+export class BoAlbumFormComponent implements OnInit {
   @Input() set album(value: Album) {
     if (value) {
       value.createForm(this._fb);

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
   template: `
     <ul>
       <li *ngFor="let album of albumsByUser$ | async ">
-        <a (click)="editAlbum(album.$key)">
+        <a [routerLink]="['/bo', 'edit', album.$key]">
           {{ album.name }} ({{ album.year }})
         </a>
       </li>
@@ -30,17 +30,11 @@ export class AlbumListComponent {
   }
 
   getAlbumsByUser() {
-    // TODO: ne pas subscribe dans component mais mapper le résultat
-    this._usersAlbumsService.getAlbumnsRefsConnectedUser().subscribe((u: UserAlbums[]) => {
-      this.albumsByUser$ = this._albumService.getListByRefs(u.map(a => a.$key));
-    });
-
-    // Circular dependencies
-    // this.albumsByUser$ = this._usersAlbumsService.getAlbumnsRefsConnectedUser();
+    this.albumsByUser$ = this._albumService.getListRefsConnectedUser();
   }
 
   editAlbum(key) {
-    this.albumToUpdate$ = this._albumService.getOne(key);
+    // this.albumToUpdate$ = this._albumService.getOne(key);
     // this.albumToUpdate$.subscribe(a => console.log(a));
   }
 }

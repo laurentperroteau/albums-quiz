@@ -23,17 +23,13 @@ export class UserAlbumsService {
     this.user$ = this._userService.user$;
   }
 
-  setAlbumToUser(album: Album, newAlbumRef: firebase.database.ThenableReference) {
-    // this._db.object(`${this.node}/${this.user.uid}/${newAlbumRef.key}`).set(album.name);
-  }
-
   getAlbumnsRefsConnectedUser(): Observable<UserAlbums[]> { // TODO: ne retourne pas firebase obj
     return this.user$.flatMap(user => {
       return this._db.list(`${this.node}/${user.uid}`);
     });
   }
 
-  // TODO: circular dependencies
+  // TODO: circular dependencies => test https://angularclass.com/blog/create-a-simple-reactive-store-for-angular-2/
   /*getAlbumnsRefsConnectedUser(): Observable<Album[]> {
     return this.user$.flatMap(u => {
       return this._db.list(`${this.node}/${u.uid}`).flatMap((ua: UserAlbums[]) => {

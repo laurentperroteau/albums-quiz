@@ -12,11 +12,13 @@ import { UserAlbumsService } from './userAlbums.service';
 
 import { FirebaseComponent } from './firebase.component';
 
-import { AlbumFormComponent } from './album/album-form.component';
+import { BoAlbumComponent } from './album/album.component';
+import { BoAlbumFormComponent } from './album/album-form.component';
 import { SharedModule } from '../shared/shared.module';
 // routes
 export const ROUTES: Routes = [
-  { path: '', component: BoHomeComponent }
+  { path: '', component: BoHomeComponent },
+  { path: 'edit/:ref', component: BoAlbumComponent }
 ];
 
 @NgModule({
@@ -28,8 +30,9 @@ export const ROUTES: Routes = [
     QuestionComponent,
     QuestionFormComponent,
     FirebaseComponent,
-    AlbumFormComponent,
     BoHomeComponent,
+    BoAlbumFormComponent,
+    BoAlbumComponent,
   ],
   providers: [
     UserService,

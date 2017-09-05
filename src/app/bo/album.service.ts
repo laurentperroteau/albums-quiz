@@ -15,7 +15,8 @@ import { UserAlbumsService } from './userAlbums.service';
 @Injectable()
 export class AlbumsService {
   node = 'albums';
-  user: firebase.User;
+  nodeUserRelation = 'user-albums';
+  user$: Observable<firebase.User>;
 
   albums$: FirebaseListObservable<Album[]>;
 
@@ -25,7 +26,7 @@ export class AlbumsService {
     private _userService: UserService,
     private _usersAlbumService: UserAlbumsService,
   ) {
-    // this.user = this._userService.user;
+    this.user$ = this._userService.user$;
     this.albums$ = this._db.list('/' + this.node);
     // this.userAlbums$ = this._db.list('/' + UserAlbums.node);
   }
@@ -35,10 +36,14 @@ export class AlbumsService {
     return this.albums$.push(album).then(
       (newAlbumRef: firebase.database.ThenableReference) => {
         // ... and users relation
-        this._usersAlbumService.setAlbumToUser(album, newAlbumRef);
+        this.setToUser(album, newAlbumRef);
       },
       error => console.log(error)
     );
+  }
+
+  setToUser(album: Album, newAlbumRef: firebase.database.ThenableReference) {
+    // this._db.object(`${this.node}/${this.user.uid}/${newAlbumRef.key}`).set(album.name);
   }
 
   getOne(ref: Ref): FirebaseObjectObservable<Album> {
@@ -50,6 +55,14 @@ export class AlbumsService {
 
   getList(): FirebaseListObservable<Album[]> {
     return this.albums$;
+  }
+
+  getListRefsConnectedUser(): Observable<Album[]> { // TODO: comment renvoyé un Firebase observable ?
+    return this.user$.flatMap(u => {
+      return this._db.list(`${this.nodeUserRelation}/${u.uid}`).flatMap((ua: UserAlbums[]) => {
+        return this.getListByRefs(ua.map(a => a.$key));
+      })
+    });
   }
 
   getListByRefs(refs: Ref[]) {
