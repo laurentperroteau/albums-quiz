@@ -11,12 +11,13 @@ import { Observable } from 'rxjs/Observable';
   template: `
     <h2>Editer un album </h2>
     <app-bo-album-form
-      [album]="(albumToUpdate$ | async)"
+      [album]="(album$ | async)"
       (onUpdate)="onUpdate($event)">
     </app-bo-album-form>
   `,
 })
 export class BoAlbumComponent implements OnInit {
+  album$: Observable<Album>;
   albumToUpdate$: FirebaseObjectObservable<Album>;
 
   constructor(
@@ -26,9 +27,10 @@ export class BoAlbumComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._route.params
-      .subscribe((params: Params) => {
+    this.album$ = this._route.params
+      .switchMap((params: Params) => {
         this.albumToUpdate$ = this._albumService.getOne(params['ref']);
+        return this.albumToUpdate$;
       });
   }
 
