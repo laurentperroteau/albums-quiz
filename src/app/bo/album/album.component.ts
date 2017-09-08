@@ -9,14 +9,20 @@ import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-bo-album',
   template: `
-    <h2>Editer un album </h2>
+    <h2>
+      <span *ngIf="(paramRef | async) === 'new'">Créer</span>
+      <span *ngIf="(paramRef | async) !== 'new'">Editer</span>
+      un album
+    </h2>
     <app-bo-album-form
+      [isNew]="(paramRef | async)"
       [album]="(album$ | async)"
       (onUpdate)="onUpdate($event)">
     </app-bo-album-form>
   `,
 })
 export class BoAlbumComponent implements OnInit {
+  paramRef: Observable<string>;
   album$: Observable<Album>;
   albumToUpdate$: FirebaseObjectObservable<Album>;
 
@@ -27,20 +33,26 @@ export class BoAlbumComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.album$ = this._route.params
-      .switchMap((params: Params) => {
-        this.albumToUpdate$ = this._albumService.getOne(params['ref']);
+    this.paramRef = this._route.params.map((params: Params) => params['ref']);
+
+    this.album$ = this.paramRef.flatMap(param => {
+      if (param === 'new') {
+        return Observable.of(new Album());
+      } else {
+        this.albumToUpdate$ = this._albumService.getOne(param);
         return this.albumToUpdate$;
-      });
+      }
+    });
   }
 
   onUpdate(updatedAlbum: Album) {
+    console.log('updatedAlbum', updatedAlbum);
     if (this.albumToUpdate$) {
       this.albumToUpdate$.update(updatedAlbum).then(_ => {
         this._router.navigate(['/bo']);
       }); // update method include in Obs replace extra service
     } else {
-      // this._albumService.create(updatedAlbum); TODO
+      this._albumService.add(updatedAlbum);
     }
   }
 }

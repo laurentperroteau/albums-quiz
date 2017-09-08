@@ -1,28 +1,25 @@
-import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
+import * as _ from 'lodash';
+
+import { Component, Input, EventEmitter, Output, OnInit, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Album } from '../db.model';
 
 @Component({
   selector: 'app-bo-album-form',
   template: `
-    <div *ngIf="_album">
-      <form [formGroup]="_album.form">
+    <div *ngIf="album">
+      <form [formGroup]="album.form">
         <input formControlName="name"/>
         <input formControlName="year"/>
         <button (click)="submit()">{{ submitLabel }}</button>
       </form>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush // TODO: a confirmer
 })
-export class BoAlbumFormComponent implements OnInit {
-  @Input() set album(value: Album) {
-    if (value) {
-      value.createForm(this._fb);
-      this._album = value;
-      this.submitLabel = 'Actualiser';
-    }
-  };
-  _album: Album;
+export class BoAlbumFormComponent implements OnInit, OnChanges {
+  @Input() isNew: string;
+  @Input() album: Album;
   @Output() onUpdate: EventEmitter<Album> = new EventEmitter(); // return new object
 
   submitLabel = 'Créer';
@@ -30,11 +27,28 @@ export class BoAlbumFormComponent implements OnInit {
   constructor(private _fb: FormBuilder) {}
 
   ngOnInit() {
-    this.album = new Album();
+    if (this.isNew === 'new') {
+      console.log('album', this.album);
+      this.album = new Album();
+      this.album.createForm(this._fb);
+    } else {
+      // TODO: désactive le bouton en attendant l'obs
+      this.submitLabel = 'Actualiser';
+    }
+  }
+
+  ngOnChanges(changes) {
+    if (this.isNew !== 'new' && changes.album && this.album) {
+      console.log('album', this.album);
+      if (!_.get(this.album, 'form')) {
+        this.album.createForm(this._fb);
+      }
+    }
   }
 
   submit() {
-    const newAlbum = this._album.updateWithFormValueAndDeleteForm();
+    const newAlbum = this.album.updateWithFormValueAndDeleteForm();
+    console.log('new album', newAlbum);
     this.onUpdate.emit(newAlbum);
   }
 }
