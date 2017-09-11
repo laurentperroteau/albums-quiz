@@ -27,7 +27,7 @@ describe('Question model', () => {
 
   it('changing form value to 3 and updating model, model id === 3', inject([FormBuilder], (fb: FormBuilder) => {
     test.form.controls.id.setValue(3);
-    test.updateWithFormValue();
+    test.updateFromForm();
     expect(test.id).toEqual(3);
   }));
 });

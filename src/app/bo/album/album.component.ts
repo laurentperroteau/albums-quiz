@@ -39,6 +39,7 @@ export class BoAlbumComponent implements OnInit {
       if (param === 'new') {
         return Observable.of(new Album());
       } else {
+        // TODO: l'obs à été ataché à l'album, pas besoin de stocker
         this.albumToUpdate$ = this._albumService.getOne(param);
         return this.albumToUpdate$;
       }
@@ -46,13 +47,16 @@ export class BoAlbumComponent implements OnInit {
   }
 
   onUpdate(updatedAlbum: Album) {
-    console.log('updatedAlbum', updatedAlbum);
     if (this.albumToUpdate$) {
-      this.albumToUpdate$.update(updatedAlbum).then(_ => {
-        this._router.navigate(['/bo']);
-      }); // update method include in Obs replace extra service
+      // TODO: problème, en utilisant update depuis le composant, pas d'accès au service d'ajout de message de success
+      // TODO: l'obs à été ataché à l'album, faire updatedAlbum.save()
+      this.albumToUpdate$.update(updatedAlbum).then(this._redirectToBo.bind(this)); // update method include in Obs replace extra service
     } else {
-      this._albumService.add(updatedAlbum);
+      this._albumService.add(updatedAlbum).then(this._redirectToBo.bind(this));
     }
+  }
+
+  private _redirectToBo() {
+    this._router.navigate(['/bo']);
   }
 }

@@ -22,17 +22,15 @@ export class ModelFactory {
     }
   }
 
-  updateWithFormValue() {
+  updateFromForm() {
     _.merge(this, this.form.value);
     return this;
   }
 
-  updateWithFormValueAndDeleteForm() {
-    this.updateWithFormValue();
-    this.deleteForm();
-    return this;
+  updateFromFormAndReturnIt() {
+    _.merge(this, this.form.value);
+    return this.form.value;
   }
-
 }
 
 // TODO: voir déplacer dans shared ou core module ?

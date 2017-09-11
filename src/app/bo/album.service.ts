@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import * as firebase from 'firebase/app';
+import { Thenable } from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 import { UserService } from '../core/services/user.service';
@@ -20,6 +21,8 @@ export class AlbumsService {
 
   albums$: FirebaseListObservable<Album[]>;
 
+  successObs: Observable<string>[];
+
   constructor(
     private _fb: FormBuilder,
     private _db: AngularFireDatabase,
@@ -31,26 +34,42 @@ export class AlbumsService {
     // this.userAlbums$ = this._db.list('/' + UserAlbums.node);
   }
 
-  add(album: Album) {
-    // Add album...
-    return this.albums$.push(album).then(
-      (newAlbumRef: firebase.database.ThenableReference) => {
-        // ... and users relation
-        this.setToUser(album, newAlbumRef);
-      },
-      error => console.log(error)
-    );
+  // TODO: rename and move to parent class
+  addSuccessPromise(obs$) {
+    obs$.then(
+      (success) => console.log('SUCCESS', success),
+      (error) => console.log('ERROR', error)
+    )
   }
 
-  setToUser(album: Album, newAlbumRef: firebase.database.ThenableReference) {
-    // this._db.object(`${this.node}/${this.user.uid}/${newAlbumRef.key}`).set(album.name);
+  add(album: Album): Thenable<string> {
+    // Add album...
+    const addAndSetUser =
+      this.albums$.push(album).then(
+        (newAlbumRef: firebase.database.ThenableReference) => {
+          // ... and users relation
+          return this.setToUser(album, newAlbumRef);
+        },
+        error => Observable.of(error) // TODO: besoin observable
+      );
+
+    this.addSuccessPromise(addAndSetUser);
+    return addAndSetUser;
+  }
+
+  setToUser(album: Album, newAlbumRef: firebase.database.ThenableReference): Observable<null> {
+    return this.user$.flatMap(u => {
+      return this._db.object(`${this.nodeUserRelation}/${u.uid}/${newAlbumRef.key}`).set(album.name)
+    });
   }
 
   getOne(ref: Ref): FirebaseObjectObservable<Album> {
-    return this._db.object(`${this.node}/${ref}`)
+    const test = this._db.object(`${this.node}/${ref}`)
       .map(rawAlbum => {
+        console.log(test); // TODO: ajouter à l'album
         return new Album(rawAlbum);
       }) as FirebaseObjectObservable<Album>;
+    return test;
   }
 
   getList(): FirebaseListObservable<Album[]> {

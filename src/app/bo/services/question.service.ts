@@ -37,7 +37,7 @@ export class QuestionService {
 
   save() {
     this.question.map(q => {
-      q.updateWithFormValue();
+      q.updateFromForm();
       return q;
     }).subscribe(q => console.log(q)); // TODO : persist ? qui subscribe ?
   }
