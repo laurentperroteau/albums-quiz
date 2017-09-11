@@ -64,12 +64,14 @@ export class AlbumsService {
   }
 
   getOne(ref: Ref): FirebaseObjectObservable<Album> {
-    const test = this._db.object(`${this.node}/${ref}`)
+    const album$ = this._db.object(`${this.node}/${ref}`)
       .map(rawAlbum => {
-        console.log(test); // TODO: ajouter à l'album
-        return new Album(rawAlbum);
+        const album = new Album(rawAlbum);
+        album.setObs(album$);
+        return album;
       }) as FirebaseObjectObservable<Album>;
-    return test;
+
+    return album$;
   }
 
   getList(): FirebaseListObservable<Album[]> {

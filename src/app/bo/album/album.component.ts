@@ -24,7 +24,6 @@ import { Observable } from 'rxjs/Observable';
 export class BoAlbumComponent implements OnInit {
   paramRef: Observable<string>;
   album$: Observable<Album>;
-  albumToUpdate$: FirebaseObjectObservable<Album>;
 
   constructor(
     private _route: ActivatedRoute,
@@ -39,18 +38,15 @@ export class BoAlbumComponent implements OnInit {
       if (param === 'new') {
         return Observable.of(new Album());
       } else {
-        // TODO: l'obs à été ataché à l'album, pas besoin de stocker
-        this.albumToUpdate$ = this._albumService.getOne(param);
-        return this.albumToUpdate$;
+        return this._albumService.getOne(param);
       }
     });
   }
 
   onUpdate(updatedAlbum: Album) {
-    if (this.albumToUpdate$) {
+    if (updatedAlbum.obs$) {
       // TODO: problème, en utilisant update depuis le composant, pas d'accès au service d'ajout de message de success
-      // TODO: l'obs à été ataché à l'album, faire updatedAlbum.save()
-      this.albumToUpdate$.update(updatedAlbum).then(this._redirectToBo.bind(this)); // update method include in Obs replace extra service
+      updatedAlbum.save().then(this._redirectToBo.bind(this));
     } else {
       this._albumService.add(updatedAlbum).then(this._redirectToBo.bind(this));
     }

@@ -1,8 +1,10 @@
 import * as _ from 'lodash';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FirebaseObjectObservable } from 'angularfire2/database';
 
 export class ModelFactory {
   form?: FormGroup;
+  obs$?: FirebaseObjectObservable<any>;
 
   createForm(fbInstance: FormBuilder) {
     this.form = fbInstance.group(convertModelToForm(this, fbInstance));
@@ -30,6 +32,16 @@ export class ModelFactory {
   updateFromFormAndReturnIt() {
     _.merge(this, this.form.value);
     return this.form.value;
+  }
+
+  setObs(obs$) {
+    // TODO: ne pas l'ajouter au form
+    this.obs$ = obs$;
+  }
+
+  save() {
+    console.log('save', this.form.value);
+    return this.obs$.update(this.form.value); // update method include in Obs replace extra service
   }
 }
 

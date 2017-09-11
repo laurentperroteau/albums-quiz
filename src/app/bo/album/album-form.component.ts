@@ -47,9 +47,6 @@ export class BoAlbumFormComponent implements OnInit, OnChanges {
   }
 
   submit() {
-    const newAlbum = this.album.updateFromFormAndReturnIt();
-    console.log('new album', newAlbum);
-    console.log('this.album', this.album);
-    this.onUpdate.emit(newAlbum);
+    this.onUpdate.emit(this.album);
   }
 }
