@@ -1,12 +1,14 @@
 import * as _ from 'lodash';
 
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { FirebaseObjectObservable } from 'angularfire2/database';
 
 import { convertModelToForm } from '../helpers/convert-model-to-form';
 
-export class ModelFactory {
+type Constructor<T> = new(...args: any[]) => T;
+
+export class ModelFatory {
   form?: FormGroup;
   obs$?: FirebaseObjectObservable<any>;
 
@@ -44,7 +46,10 @@ export class ModelFactory {
   }
 
   save() {
-    console.log('save', this.form.value);
-    return this.obs$.update(this.form.value); // update method include in Obs replace extra service
+    console.log('save', this.updateFromFormAndReturnIt());
+    return this.obs$.update(this.updateFromFormAndReturnIt()); // update method include in Obs replace extra service
   }
 }
+
+// As mixin
+export const WithModelFactory = <T extends Constructor<any>>(Base: T) => class extends ModelFatory {};

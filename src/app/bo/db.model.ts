@@ -1,14 +1,14 @@
 import * as _ from 'lodash';
-import { ModelFactory } from '../core/models/model-fatory';
+import { WithModelFactory } from '../core/models/model-fatory';
 
 export type Ref = string | null;
 
-class FirebaseNode extends ModelFactory {
+export class FirebaseNode {
   readonly $key?: Ref; // === uid in database
   $exists?: Function;
 }
 
-class BaseNode extends FirebaseNode {
+export class BaseNode extends FirebaseNode {
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -18,7 +18,7 @@ class BaseNode extends FirebaseNode {
   }
 }
 
-export class Album extends BaseNode {
+export class Album extends WithModelFactory(BaseNode) {
   name: string;
   year: number;
 

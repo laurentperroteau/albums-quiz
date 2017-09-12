@@ -1,9 +1,11 @@
 import * as _ from 'lodash';
 
-import { ModelFactory } from '../../core/models/model-fatory';
+import { BaseNode } from '../db.model';
+
+import { WithModelFactory } from '../../core/models/model-fatory';
 
 // TODO: add test
-export class Question extends ModelFactory {
+export class Question extends WithModelFactory(BaseNode) {
   id?: number;
   label: string;
   radios?: QuestionRadios;
