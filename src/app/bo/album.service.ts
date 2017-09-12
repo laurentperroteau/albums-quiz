@@ -45,7 +45,7 @@ export class AlbumsService {
   add(album: Album): Thenable<string> {
     // Add album...
     const addAndSetUser =
-      this.albums$.push(album).then(
+      this.albums$.push(album.updateFromFormAndReturnIt()).then(
         (newAlbumRef: firebase.database.ThenableReference) => {
           // ... and users relation
           return this.setToUser(album, newAlbumRef);

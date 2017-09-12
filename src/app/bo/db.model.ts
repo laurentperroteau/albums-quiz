@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { ModelFactory } from './question/question.model';
+import { ModelFactory } from '../core/models/model-fatory';
 
 export type Ref = string | null;
 

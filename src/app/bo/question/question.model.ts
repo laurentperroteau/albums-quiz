@@ -1,51 +1,7 @@
 import * as _ from 'lodash';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FirebaseObjectObservable } from 'angularfire2/database';
 
-export class ModelFactory {
-  form?: FormGroup;
-  obs$?: FirebaseObjectObservable<any>;
+import { ModelFactory } from '../../core/models/model-fatory';
 
-  createForm(fbInstance: FormBuilder) {
-    this.form = fbInstance.group(convertModelToForm(this, fbInstance));
-  }
-
-  updateForm(fbInstance: FormBuilder) {
-    if (!this.form) {
-      this.createForm(fbInstance);
-    } else {
-      this.form.patchValue(this);
-    }
-  }
-
-  deleteForm() {
-    if (this.form) {
-      delete this.form;
-    }
-  }
-
-  updateFromForm() {
-    _.merge(this, this.form.value);
-    return this;
-  }
-
-  updateFromFormAndReturnIt() {
-    _.merge(this, this.form.value);
-    return this.form.value;
-  }
-
-  setObs(obs$) {
-    // TODO: ne pas l'ajouter au form
-    this.obs$ = obs$;
-  }
-
-  save() {
-    console.log('save', this.form.value);
-    return this.obs$.update(this.form.value); // update method include in Obs replace extra service
-  }
-}
-
-// TODO: voir déplacer dans shared ou core module ?
 // TODO: add test
 export class Question extends ModelFactory {
   id?: number;
@@ -77,58 +33,7 @@ export class Question extends ModelFactory {
   }
 }
 
-type keyOfQuestion = keyof Question;
-const REQUIRED: keyOfQuestion[] = ['label', 'radios'];
-const DISABLED: keyOfQuestion[] = [];
-
-/*export class QuestionForm extends QuestionFactory {
-
-  constructor(fbInstance: FormBuilder, objRaw?: Partial<Question>) {
-    super(objRaw);
-
-    _.merge(this, convertModelToForm(this, fbInstance));
-  }
-}*/
-
-function convertModelToForm(Obj: any, fbInstance: FormBuilder) {
-  const form = {};
-
-  Object.keys(Obj).forEach((key: keyOfQuestion) => {
-    form[key] = convertModelToControl(Obj[key], key, fbInstance);
-  });
-
-  return form;
-}
-
-
-
 export class QuestionRadios {
   key: string;
   label: string;
-}
-
-// TODO: move
-function convertModelToControl(data, key, fbInstance): any {
-  let control: FormControl | FormArray;
-
-  if (_.isArray(data)) {
-    const arrayControl: FormControl[] = [];
-    data.forEach(item => {
-      arrayControl.push(convertModelToControl(item, key, fbInstance));
-    });
-
-    control = fbInstance.array(arrayControl);
-  } else {
-    control = fbInstance.control(data);
-  }
-
-  if (DISABLED.indexOf(key) !== -1) {
-    control.disable();
-  }
-
-  if (REQUIRED.indexOf(key) !== -1) {
-    control.setValidators(Validators.required)
-  }
-
-  return control;
 }
