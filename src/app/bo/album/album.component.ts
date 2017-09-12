@@ -1,10 +1,10 @@
+import { Observable } from 'rxjs/Observable';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { FirebaseObjectObservable } from 'angularfire2/database';
-import { Album } from '../db.model';
+
 import { AlbumsService } from '../album.service';
-import { Observable } from 'rxjs/Observable';
+import { Album } from '../models/album.model';
 
 @Component({
   selector: 'app-bo-album',

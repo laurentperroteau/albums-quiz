@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 
 import { AlbumsService } from '../../bo/album.service';
 import { UserAlbumsService } from '../../bo/userAlbums.service';
-import { Album, UserAlbums } from '../../bo/db.model';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { Album } from '../../bo/models/album.model';
 
 @Component({
   selector: 'app-album-list',

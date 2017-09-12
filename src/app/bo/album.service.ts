@@ -7,10 +7,13 @@ import * as firebase from 'firebase/app';
 import { Thenable } from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
-import { UserService } from '../core/services/user.service';
+import { Ref } from '../core';
 
-import { Album, Ref, UserAlbums } from './db.model';
+import { UserService } from '../core/services/user.service';
 import { UserAlbumsService } from './userAlbums.service';
+
+import { Album } from './models/album.model';
+import { UserAlbums } from './models/user-albums.model';
 
 // TODO: créer un classe parente qui match les erreur
 @Injectable()
@@ -44,6 +47,8 @@ export class AlbumsService {
 
   add(album: Album): Thenable<string> {
     // Add album...
+    console.log('album push', album.updateFromFormAndReturnIt());
+    // TODO: ne fonctionne plus
     const addAndSetUser =
       this.albums$.push(album.updateFromFormAndReturnIt()).then(
         (newAlbumRef: firebase.database.ThenableReference) => {

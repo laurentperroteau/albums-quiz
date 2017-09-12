@@ -7,8 +7,8 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 import { UserService } from '../core/services/user.service';
 
-import { Album, Ref, UserAlbums } from './db.model';
 import { AlbumsService } from './album.service';
+import { UserAlbums } from './models/user-albums.model';
 
 @Injectable()
 export class UserAlbumsService {

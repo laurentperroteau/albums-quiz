@@ -8,7 +8,8 @@ import { convertModelToForm } from '../helpers/convert-model-to-form';
 
 type Constructor<T> = new(...args: any[]) => T;
 
-export class ModelFatory {
+// As mixin
+export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class extends Base {
   form?: FormGroup;
   obs$?: FirebaseObjectObservable<any>;
 
@@ -49,7 +50,4 @@ export class ModelFatory {
     console.log('save', this.updateFromFormAndReturnIt());
     return this.obs$.update(this.updateFromFormAndReturnIt()); // update method include in Obs replace extra service
   }
-}
-
-// As mixin
-export const WithModelFactory = <T extends Constructor<any>>(Base: T) => class extends ModelFatory {};
+};

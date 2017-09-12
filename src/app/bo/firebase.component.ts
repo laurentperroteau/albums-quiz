@@ -4,10 +4,12 @@ import { Component } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Album, Ref, UserAlbums } from './db.model';
 import { AlbumsService } from './album.service';
 import { UserAlbumsService } from './userAlbums.service';
 import { UserService } from '../core/services/user.service';
+import { Album } from './models/album.model';
+import { UserAlbums } from './models/user-albums.model';
+import { Ref } from '../core/models/db.model';
 
 interface FirebaseItem {
   readonly uid: string;

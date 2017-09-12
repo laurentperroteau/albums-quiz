@@ -2,7 +2,8 @@ import * as _ from 'lodash';
 
 import { Component, Input, EventEmitter, Output, OnInit, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Album } from '../db.model';
+
+import { Album } from '../models/album.model';
 
 @Component({
   selector: 'app-bo-album-form',
