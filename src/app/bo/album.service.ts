@@ -37,33 +37,50 @@ export class AlbumsService {
     // this.userAlbums$ = this._db.list('/' + UserAlbums.node);
   }
 
-  // TODO: rename and move to parent class
-  addSuccessPromise(obs$) {
-    obs$.then(
-      (success) => console.log('SUCCESS', success),
-      (error) => console.log('ERROR', error)
+  // TODO: move to parent class
+  resolvePromise(promise) {
+    promise.then(
+      (success) => {
+        if (success instanceof Observable) {
+          success.subscribe(msj => {
+            console.log('SUCCESS', msj)
+          })
+        } else {
+          console.log('SUCCESS', success)
+        }
+      },
+      (error) => {
+        if (error instanceof Observable) {
+          error.subscribe(msj => {
+            console.log('ERROR', msj)
+          })
+        } else {
+          console.log('ERROR', error)
+        }
+      }
     )
   }
 
   add(album: Album): Thenable<string> {
     // Add album...
-    console.log('album push', album.updateFromFormAndReturnIt());
+    const newAlbum =  album.updateFromFormAndReturnIt();
     // TODO: ne fonctionne plus
     const addAndSetUser =
-      this.albums$.push(album.updateFromFormAndReturnIt()).then(
+      this.albums$.push(newAlbum).then(
         (newAlbumRef: firebase.database.ThenableReference) => {
           // ... and users relation
-          return this.setToUser(album, newAlbumRef);
+          return this.setToUser(newAlbum, newAlbumRef);
         },
-        error => Observable.of(error) // TODO: besoin observable
+        error => Observable.of(error)
       );
 
-    this.addSuccessPromise(addAndSetUser);
+    this.resolvePromise(addAndSetUser);
     return addAndSetUser;
   }
 
   setToUser(album: Album, newAlbumRef: firebase.database.ThenableReference): Observable<null> {
     return this.user$.flatMap(u => {
+      console.log('uuuuuuuuuuu', u);
       return this._db.object(`${this.nodeUserRelation}/${u.uid}/${newAlbumRef.key}`).set(album.name)
     });
   }
