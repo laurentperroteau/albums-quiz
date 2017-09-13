@@ -80,7 +80,6 @@ export class AlbumsService {
 
   setToUser(album: Album, newAlbumRef: firebase.database.ThenableReference): Observable<null> {
     return this.user$.flatMap(u => {
-      console.log('uuuuuuuuuuu', u);
       return this._db.object(`${this.nodeUserRelation}/${u.uid}/${newAlbumRef.key}`).set(album.name)
     });
   }
@@ -109,7 +108,6 @@ export class AlbumsService {
   }
 
   getListByRefs(refs: Ref[]) {
-    console.log(refs);
     return this.albums$
       .map(as => as.filter(a => refs.indexOf(a.$key) !== -1))
       // Filter ne fonctionne pas, il renvoi la liste complète

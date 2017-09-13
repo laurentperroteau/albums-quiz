@@ -69,7 +69,6 @@ interface Posts extends FirebaseItem {
 export class FirebaseComponent {
   db: AngularFireDatabase;
 
-  user: firebase.User;
   posts: FirebaseListObservable<Posts[]>;
   rootObject: FirebaseObjectObservable<any>;
   // Album db
@@ -86,7 +85,6 @@ export class FirebaseComponent {
     private _albumService: AlbumsService,
     private _usersAlbumsService: UserAlbumsService,
   ) {
-    this.user = this._userService.user;
     this.posts = this._db.list('/posts');
     // this.posts.subscribe(r => console.log(r));
 
