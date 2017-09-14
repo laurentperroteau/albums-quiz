@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -19,6 +19,10 @@ import { Album } from '../models/album.model';
       [album]="(album$ | async)"
       (onUpdate)="onUpdate($event)">
     </app-bo-album-form>
+    <br />
+    <a [routerLink]="['/bo', 'edit', (paramRef | async), 'question', 'edit', 'new']">
+      Ajouter une question
+    </a>
   `,
 })
 export class BoAlbumComponent implements OnInit {
@@ -32,7 +36,7 @@ export class BoAlbumComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.paramRef = this._route.params.map((params: Params) => params['ref']);
+    this.paramRef = this._route.params.map((params: Params) => params['refAlbum']);
 
     this.album$ = this.paramRef.flatMap(param => {
       if (param === 'new') {
