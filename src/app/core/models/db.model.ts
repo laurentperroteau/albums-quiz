@@ -8,6 +8,7 @@ export class FirebaseNode {
 export class BaseNode extends FirebaseNode {
   createdAt?: Date;
   updatedAt?: Date;
+  userRef?: Ref;
 
   constructor() {
     super();

@@ -12,7 +12,7 @@ import { Album } from '../models/album.model';
       <form [formGroup]="album.form">
         <input formControlName="name"/>
         <input formControlName="year"/>
-        <button (click)="submit()">{{ submitLabel }}</button>
+        <button type="submit" (click)="submit()">{{ submitLabel }}</button>
       </form>
     </div>
   `,

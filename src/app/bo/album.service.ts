@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -16,6 +16,7 @@ import { Album } from './models/album.model';
 import { UserAlbums } from './models/user-albums.model';
 
 // TODO: créer un classe parente qui match les erreur
+// TODO: rename to album
 @Injectable()
 export class AlbumsService {
   node = 'albums';

@@ -7,7 +7,7 @@ import { MdToolbarModule, MdButtonModule } from '@angular/material';
 import { UserService } from './core/services/user.service';
 
 import { AppComponent } from './app.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 
 class UserServiceStub {
   user$: Observable<any>;

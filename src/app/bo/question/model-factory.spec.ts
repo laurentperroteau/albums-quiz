@@ -1,10 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 
-import { Question } from './question.model';
 import { WithModelFactory } from '../../core/models/model-fatory';
 
-describe('Question model', () => {
+describe('Model factory', () => {
   class Dumb {}
   class TestModel extends WithModelFactory(Dumb) {
     id: number;

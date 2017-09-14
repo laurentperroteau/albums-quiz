@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AlbumsService } from '../../bo/album.service';
 import { UserAlbumsService } from '../../bo/userAlbums.service';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { Album } from '../../bo/models/album.model';
 
 @Component({
@@ -30,6 +30,7 @@ export class AlbumListComponent {
   }
 
   getAlbumsByUser() {
+    // TODO: utiliser user-albums resource (avec juste le nom)
     this.albumsByUser$ = this._albumService.getListRefsConnectedUser();
   }
 
