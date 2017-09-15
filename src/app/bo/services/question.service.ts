@@ -1,3 +1,5 @@
+import * as urljoin from 'url-join';
+
 import { Observable  } from 'rxjs/Rx';
 
 import { Injectable } from '@angular/core';
@@ -97,7 +99,13 @@ export class QuestionService {
 
   setToUser(question: Question, newQuestionRef: firebase.database.ThenableReference): Observable<null> {
     return this.user$.flatMap(u => {
-      return this._db.object(`${this.nodeAlbumRelation}/${u.uid}/${newQuestionRef.key}`).set(question.label)
+      return this._db.object(
+        urljoin(
+          this.nodeAlbumRelation,
+          u.uid,
+          newQuestionRef.key
+        )
+      ).set(question.label)
     });
   }
 
