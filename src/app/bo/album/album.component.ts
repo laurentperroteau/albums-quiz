@@ -20,6 +20,11 @@ import { Album } from '../models/album.model';
       (onUpdate)="onUpdate($event)">
     </app-bo-album-form>
     <br />
+    <h2>Liste des question</h2>
+    <app-question-list
+      [albumRef]="(paramRef | async)"
+      [baseLink]="['/bo', 'edit', (paramRef | async), 'question', 'edit']">
+    </app-question-list>
     <a [routerLink]="['/bo', 'edit', (paramRef | async), 'question', 'edit', 'new']">
       Ajouter une question
     </a>

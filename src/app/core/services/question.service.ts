@@ -1,4 +1,5 @@
 import * as urljoin from 'url-join';
+import * as _ from 'lodash';
 
 import { Observable  } from 'rxjs/Rx';
 
@@ -6,16 +7,12 @@ import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import * as firebase from 'firebase/app';
-import { Thenable } from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
-import { Ref } from '../../core';
+import { Ref } from '../';
 
-// import { AlbumQuestionsService } from './userQuestions.service';
-
-// import { AlbumQuestions } from '../models/question-questions.model';
-import { Question } from '../models/question.model';
-import { UserService } from '../../core';
+import { Question } from '../../bo/models/question.model';
+import { UserService } from '../';
 
 // TODO: créer un classe parente qui match les erreur
 @Injectable()
@@ -30,11 +27,9 @@ export class QuestionService {
     private _fb: FormBuilder,
     private _db: AngularFireDatabase,
     private _userService: UserService,
-    // private _usersQuestionService: AlbumQuestionsService,
   ) {
     this.user$ = this._userService.user$;
     this.questions$ = this._db.list('/' + this.node);
-    // this.userQuestions$ = this._db.list('/' + AlbumQuestions.node);
   }
 
   // TODO: move to parent class
@@ -81,13 +76,18 @@ export class QuestionService {
     const test = this.user$.flatMap(u => {
       newQuestion.userRef = u.uid;
 
+      console.debug('question.add', newQuestion);
+
+      // TODO: vérifier valeur de retour
       const addAndSetUser =
         this.questions$.push(newQuestion).then(
           (newQuestionRef: firebase.database.ThenableReference) => {
             // ... and users relation
-            return this.setToUser(newQuestion, newQuestionRef);
+            return this.setToAlbum(
+              new Question(_.merge({$key: newQuestionRef.key}, newQuestion))
+            );
           },
-          error => Observable.of(error)
+          error => Promise.resolve(error)
         );
 
       this.resolvePromise(addAndSetUser);
@@ -97,16 +97,14 @@ export class QuestionService {
     return this.publishRequest(test);
   }
 
-  setToUser(question: Question, newQuestionRef: firebase.database.ThenableReference): Observable<null> {
-    return this.user$.flatMap(u => {
-      return this._db.object(
-        urljoin(
-          this.nodeAlbumRelation,
-          u.uid,
-          newQuestionRef.key
-        )
-      ).set(question.label)
-    });
+  setToAlbum(question: Question): firebase.Promise<void> {
+    return this._db.object(
+      urljoin(
+        this.nodeAlbumRelation,
+        question.albumRef,
+        question.$key,
+      )
+    ).set(question.label);
   }
 
   getOne(ref: Ref): FirebaseObjectObservable<Question> {
@@ -120,13 +118,12 @@ export class QuestionService {
     return question$;
   }
 
-  getList(): FirebaseListObservable<Question[]> {
-    return this.questions$;
-  }
-
-  getListRefsConnectedUser(): Observable<Question[]> {
-    return this.user$.flatMap(u => {
-      return this._db.list(`${this.nodeAlbumRelation}/${u.uid}`);
-    });
+  getQuestionsByAlbum(albumRef: Ref) {
+    return this._db.list(
+      urljoin(
+        this.nodeAlbumRelation,
+        albumRef
+      )
+    );
   }
 }

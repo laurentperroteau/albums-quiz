@@ -3,26 +3,26 @@ import { Observable } from 'rxjs/Rx';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { QuestionService } from '../services/question.service';
+import { QuestionService } from '../../core';
 import { Question } from '../models/question.model';
 
 @Component({
   selector: 'app-bo-question',
   template: `
     <h2>
-      <span *ngIf="(paramRef | async) === 'new'">Créer</span>
-      <span *ngIf="(paramRef | async) !== 'new'">Editer</span>
+      <span *ngIf="(paramRefQuestion$ | async) === 'new'">Créer</span>
+      <span *ngIf="(paramRefQuestion$ | async) !== 'new'">Editer</span>
       une question
     </h2>
     <app-bo-question-form
-      [isNew]="(paramRef | async)"
+      [isNew]="(paramRefQuestion$ | async)"
       [question]="(question$ | async)"
       (onUpdate)="onUpdate($event)">
     </app-bo-question-form>
   `,
 })
 export class BoQuestionComponent implements OnInit {
-  paramRef: Observable<string>;
+  paramRefQuestion$: Observable<string>;
   question$: Observable<Question>;
 
   constructor(
@@ -32,13 +32,14 @@ export class BoQuestionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.paramRef = this._route.params.map((params: Params) => params['refQuestion']);
+    const paramRef$ = this._route.params.map((params: Params) => params);
+    this.paramRefQuestion$ = paramRef$.map((params: Params) => params['refQuestion']);
 
-    this.question$ = this.paramRef.flatMap(param => {
-      if (param === 'new') {
-        return Observable.of(new Question());
+    this.question$ = paramRef$.flatMap(params => {
+      if (params['refQuestion'] === 'new') {
+        return Observable.of(new Question({albumRef: params['refAlbum']}));
       } else {
-        return this._questionService.getOne(param);
+        return this._questionService.getOne(params['refQuestion']);
       }
     });
   }

@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 
 import { MdToolbarModule, MdButtonModule } from '@angular/material';
 
-import { CodeModule } from './core/core.module';
+import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 
@@ -49,7 +49,7 @@ export const ROUTES: Routes = [
     RouterModule.forRoot(ROUTES),
 
     // Core
-    CodeModule,
+    CoreModule,
 
     // Lib
     MdToolbarModule,

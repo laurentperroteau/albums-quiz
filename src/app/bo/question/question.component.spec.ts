@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { QuestionService } from '../services/question.service';
+import { QuestionService } from '../../core/services/question.service';
 import { MdRadioModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BoQuestionComponent } from './question.component';

@@ -20,11 +20,9 @@ import { Album } from '../../bo/models/album.model';
 })
 export class AlbumListComponent {
   albumsByUser$: Observable<Album[]>;
-  albumToUpdate$: FirebaseObjectObservable<Album>;
 
   constructor(
     private _albumService: AlbumsService,
-    private _usersAlbumsService: UserAlbumsService,
   ) {
     this.getAlbumsByUser();
   }
@@ -32,10 +30,5 @@ export class AlbumListComponent {
   getAlbumsByUser() {
     // TODO: utiliser user-albums resource (avec juste le nom)
     this.albumsByUser$ = this._albumService.getListRefsConnectedUser();
-  }
-
-  editAlbum(key) {
-    // this.albumToUpdate$ = this._albumService.getOne(key);
-    // this.albumToUpdate$.subscribe(a => console.log(a));
   }
 }

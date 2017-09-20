@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 
 import { BoHomeComponent } from './home/home.component';
 
-import { QuestionService } from './services/question.service';
 import { UserService } from '../core/services/user.service';
 import { AlbumsService } from './album.service';
 import { UserAlbumsService } from './userAlbums.service';
@@ -49,7 +48,6 @@ export const ROUTES: Routes = [
     UserService,
     AlbumsService,
     UserAlbumsService,
-    QuestionService,
   ]
 })
 export class BoModule { }

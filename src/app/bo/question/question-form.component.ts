@@ -10,7 +10,6 @@ import { Question } from '../models/question.model';
   template: `
     <div *ngIf="question">
       <form [formGroup]="question.form">
-        <input formControlName="id"/>
         <input formControlName="label"/>
         <!--<md-radio-group formControlName="radioResponse">
           <div formArrayName="radios">
@@ -37,8 +36,6 @@ export class BoQuestionFormComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.isNew === 'new') {
-      console.log('question', this.question);
-      this.question = new Question();
       this.question.createForm(this._fb);
     } else {
       // TODO: désactive le bouton en attendant l'obs
