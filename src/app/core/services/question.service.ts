@@ -86,7 +86,7 @@ export class QuestionService {
           error => Promise.resolve(error)
         );
 
-      this.publishRequest(add$);
+      this.resolvePromise(add$);
       return add$;
     });
 

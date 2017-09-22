@@ -13,6 +13,16 @@ export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class ex
   form?: FormGroup;
   obs$?: FirebaseObjectObservable<any>;
 
+  factoryProperties: Array<keyof this> = ['form', 'obs$', 'factoryProperties'];
+
+  get() {
+    return _.pick(
+      this,
+      // Get properties of object with factory utilities
+      Object.getOwnPropertyNames(this).filter((p: keyof this) => this.factoryProperties.indexOf(p) === -1)
+    );
+  }
+
   createForm(fbInstance: FormBuilder) {
     this.form = fbInstance.group(convertModelToForm(this, fbInstance, ['obs$']));
   }
@@ -33,13 +43,12 @@ export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class ex
 
   updateFromForm() {
     _.merge(this, this.form.value);
-    return this;
+    return this.get();
   }
 
-  // TODO: devrait retourner l'obj et non pas form.value puisque certaines données pourrait ne pas faire partie du form
   updateFromFormAndReturnIt() {
     _.merge(this, this.form.value);
-    return this.form.value;
+    return this.get();
   }
 
   setObs(obs$) {
