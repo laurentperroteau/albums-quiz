@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { QuestionService } from '../../core';
 import { Ref } from '../../core';
-import { AlbumQuestions } from '../../bo/models/album-questions.model';
+import { Question } from '../../bo/models/question.model';
 
 @Component({
   selector: 'app-question-list',
@@ -12,14 +12,14 @@ import { AlbumQuestions } from '../../bo/models/album-questions.model';
     <ul>
       <li *ngFor="let question of questionsByAlbum$ | async ">
         <a [routerLink]="getLink(question.$key)">
-          {{ question.$value }}
+          {{ question.label }}
         </a>
       </li>
     </ul>
   `,
 })
 export class QuestionListComponent implements OnInit {
-  questionsByAlbum$: Observable<AlbumQuestions[]>;
+  questionsByAlbum$: Observable<Question[]>;
 
   @Input() albumRef: Ref;
   @Input() baseLink: any[];

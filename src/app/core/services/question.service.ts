@@ -18,7 +18,6 @@ import { UserService } from '../';
 @Injectable()
 export class QuestionService {
   node = 'questions';
-  nodeAlbumRelation = 'album-questions';
   user$: Observable<firebase.User>;
 
   questions$: FirebaseListObservable<Question[]>;
@@ -76,28 +75,25 @@ export class QuestionService {
     const test = this.user$.flatMap(u => {
       newQuestion.userRef = u.uid;
 
-      console.debug('question.add', newQuestion);
-
-      // TODO: vérifier valeur de retour
-      const addAndSetUser =
+      const add$ =
         this.questions$.push(newQuestion).then(
           (newQuestionRef: firebase.database.ThenableReference) => {
-            // ... and users relation
-            return this.setToAlbum(
+            return new Question(_.merge({$key: newQuestionRef.key}, newQuestion));
+            /*return this.setToAlbum(
               new Question(_.merge({$key: newQuestionRef.key}, newQuestion))
-            );
+            );*/
           },
           error => Promise.resolve(error)
         );
 
-      this.resolvePromise(addAndSetUser);
-      return addAndSetUser;
+      this.publishRequest(add$);
+      return add$;
     });
 
     return this.publishRequest(test);
   }
 
-  setToAlbum(question: Question): firebase.Promise<void> {
+  /*setToAlbum(question: Question): firebase.Promise<void> {
     return this._db.object(
       urljoin(
         this.nodeAlbumRelation,
@@ -105,7 +101,7 @@ export class QuestionService {
         question.$key,
       )
     ).set(question.label);
-  }
+  }*/
 
   getOne(ref: Ref): FirebaseObjectObservable<Question> {
     const question$ = this._db.object(`${this.node}/${ref}`)
@@ -119,11 +115,11 @@ export class QuestionService {
   }
 
   getQuestionsByAlbum(albumRef: Ref) {
-    return this._db.list(
-      urljoin(
-        this.nodeAlbumRelation,
-        albumRef
-      )
-    );
+    return this._db.list('/' + this.node, {
+      query: {
+        orderByChild: 'albumRef',
+        equalTo: albumRef,
+      }
+    });
   }
 }
