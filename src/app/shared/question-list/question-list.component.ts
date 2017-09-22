@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Rx';
-import { Question } from '../../bo/models/question.model';
 
 import { QuestionService } from '../../core';
 import { Ref } from '../../core';
+import { AlbumQuestions } from '../../bo/models/album-questions.model';
 
 @Component({
   selector: 'app-question-list',
@@ -12,14 +12,14 @@ import { Ref } from '../../core';
     <ul>
       <li *ngFor="let question of questionsByAlbum$ | async ">
         <a [routerLink]="getLink(question.$key)">
-          ({{ question.$value  }})
+          {{ question.$value }}
         </a>
       </li>
     </ul>
   `,
 })
 export class QuestionListComponent implements OnInit {
-  questionsByAlbum$: Observable<Question[]>;
+  questionsByAlbum$: Observable<AlbumQuestions[]>;
 
   @Input() albumRef: Ref;
   @Input() baseLink: any[];
@@ -29,12 +29,11 @@ export class QuestionListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.questionsByAlbum$ = this.getQuestionsByAlbum();
-    this.getQuestionsByAlbum().subscribe(c => console.log(c)); // TODO: possède bien une key
+    this.questionsByAlbum$ = this.getQuestionsByAlbum();
   }
 
   getLink(key) {
-    return this.baseLink && key ? [this.baseLink, ...key] : this.baseLink;
+    return this.baseLink && key ? [...this.baseLink, key] : this.baseLink;
   }
 
   getQuestionsByAlbum() {
