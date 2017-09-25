@@ -8,18 +8,19 @@ import { convertModelToForm } from '../helpers/convert-model-to-form';
 
 type Constructor<T> = new(...args: any[]) => T;
 
+// TODO: devoir ignorer des propriétés n'est pas idéal, voir pour créer un objet factory pour le model
+const FACTORY_PROPERTIES = ['form', 'obs$'];
+
 // As mixin
 export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class extends Base {
   form?: FormGroup;
   obs$?: FirebaseObjectObservable<any>;
 
-  factoryProperties: Array<keyof this> = ['form', 'obs$', 'factoryProperties'];
-
   get() {
     return _.pick(
       this,
       // Get properties of object with factory utilities
-      Object.getOwnPropertyNames(this).filter((p: keyof this) => this.factoryProperties.indexOf(p) === -1)
+      Object.getOwnPropertyNames(this).filter((p: keyof this) => FACTORY_PROPERTIES.indexOf(p) === -1)
     );
   }
 
