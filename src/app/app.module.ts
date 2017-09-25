@@ -26,6 +26,10 @@ export const ROUTES: Routes = [
   {
     path: 'bo',
     loadChildren: './bo/bo.module#BoModule',
+  },
+  {
+    path: 'quiz',
+    loadChildren: './front/front.module#FrontModule',
   }
 ];
 

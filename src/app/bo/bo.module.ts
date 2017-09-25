@@ -45,7 +45,7 @@ export const ROUTES: Routes = [
     BoQuestionFormComponent,
   ],
   providers: [
-    UserService,
+    UserService, // TODO: suppr
     AlbumsService,
     UserAlbumsService,
   ]
