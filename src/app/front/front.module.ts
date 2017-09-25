@@ -25,7 +25,6 @@ export const ROUTES: Routes = [
   declarations: [
     FrontHomeComponent,
   ],
-  providers: [
-  ]
+  providers: []
 })
 export class FrontModule {}
