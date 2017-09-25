@@ -10,8 +10,20 @@ import { Question } from '../models/question.model';
   template: `
     <div *ngIf="question">
       <form [formGroup]="question.form">
-        <input formControlName="label"/>
-        <!--<md-radio-group formControlName="radioResponse">
+        Intitulé question : <input formControlName="label"/>
+        <ul>
+          <li formArrayName="radios">
+            <div *ngFor="let radio of radios.controls; let i=index" [formGroupName]="i">
+              Réponse {{ i }}
+              Clé : <input formControlName="key"/>
+              Valeur : <input formControlName="label"/>
+            </div>
+          </li>
+        </ul>
+        Clé de la réponse : <input formControlName="radioResponse"/>
+        <!--
+        TODO: pour la réponse
+        <md-radio-group formControlName="radioResponse">
           <div formArrayName="radios">
             <md-radio-button *ngFor="let radio of radios.controls;" [value]="radio.value">
               {{ radio.value.label }}

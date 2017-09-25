@@ -5,7 +5,7 @@ import { BaseNode, Ref, WithModelFactory } from '../../core';
 // TODO: add test
 export class Question extends WithModelFactory(BaseNode) {
   label: string;
-  radios?: QuestionRadios;
+  radios?: QuestionRadios[];
   radioResponse?: string;
   albumRef: Ref;
 
@@ -13,17 +13,13 @@ export class Question extends WithModelFactory(BaseNode) {
     super();
     const objDefault: Partial<any> = {
       label: '',
-      radios: null,
-      radioResponse: null
+      radios: [new QuestionRadios(), new QuestionRadios()],
+      radioResponse: ''
     };
 
     _.merge(this, objDefault, objRaw);
 
     console.debug('new question', this);
-
-    /*for (let i = 0; i < 3; i++) {
-      this.choices.push({key: 'lorem', label: 'Lorem ipsum'});
-    }*/
   }
 
   // exemple de méthode factory spécifique au model
@@ -33,4 +29,13 @@ export class Question extends WithModelFactory(BaseNode) {
 export class QuestionRadios {
   key: string;
   label: string;
+
+  constructor(objRaw?: Partial<QuestionRadios>) {
+    const objDefault: Partial<QuestionRadios> = {
+      key: '',
+      label: '',
+    };
+
+    _.merge(this, objDefault, objRaw);
+  }
 }

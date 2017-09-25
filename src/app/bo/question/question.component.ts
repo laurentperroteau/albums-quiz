@@ -49,7 +49,7 @@ export class BoQuestionComponent implements OnInit {
       // TODO: problème, en utilisant update depuis le composant, pas d'accès au service d'ajout de message de success
       updatedQuestion.save().then(this._redirectToBo.bind(this));
     } else {
-      this._questionService.add(updatedQuestion); // .then(this._redirectToBo.bind(this));
+      this._questionService.add(updatedQuestion).subscribe(this._redirectToBo.bind(this));
     }
   }
 
