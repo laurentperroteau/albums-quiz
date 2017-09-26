@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { AlbumsService } from '../../core/services/album.service';
 import { UserAlbumsService } from '../../core/services/userAlbums.service';
@@ -11,7 +11,7 @@ import { Album } from '../../core/models/album.model';
   template: `
     <ul>
       <li *ngFor="let album of albumsByUser$ | async ">
-        <a [routerLink]="['/bo', 'edit', album.$key]">
+        <a [routerLink]="getLink(album.$key)">
           {{ album.name }} ({{ album.year }})
         </a>
       </li>
@@ -21,14 +21,18 @@ import { Album } from '../../core/models/album.model';
 export class AlbumListComponent {
   albumsByUser$: Observable<Album[]>;
 
-  constructor(
-    private _albumService: AlbumsService,
-  ) {
+  @Input() baseLink: string[];
+
+  constructor(private _albumService: AlbumsService) {
     this.getAlbumsByUser();
   }
 
   getAlbumsByUser() {
     // TODO: utiliser user-albums resource (avec juste le nom)
     this.albumsByUser$ = this._albumService.getListRefsConnectedUser();
+  }
+
+  getLink(key) {
+    return this.baseLink && key ? [...this.baseLink, key] : this.baseLink;
   }
 }

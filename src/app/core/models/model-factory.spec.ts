@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 
-import { WithModelFactory } from '../../core/models/model-fatory';
+import { WithModelFactory } from './model-fatory';
 
 describe('Model factory', () => {
   class Dumb {}
