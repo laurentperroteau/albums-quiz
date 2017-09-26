@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MdRadioModule } from '@angular/material';
 
-import { CoreModule } from '../core/core.module';
+// import { CoreModule } from '../core/core.module';
 
 import { AlbumListComponent } from './album-list/album-list.component';
 import { QuestionListComponent } from './question-list/question-list.component';
@@ -19,13 +19,13 @@ import { QuestionListComponent } from './question-list/question-list.component';
     MdRadioModule,
 
     // Core
-    CoreModule, // TODO: c'est correct ???, utilser Angury pour vérifier les injections
+    // CoreModule, // TODO: c'est correct ???, utilser Angury pour vérifier les injections
   ],
   declarations: [
     AlbumListComponent,
     QuestionListComponent,
   ],
-  providers: [],
+  providers: [ /* Push HTTP service in core module */ ],
   exports: [
     CommonModule,
     FormsModule,
@@ -33,7 +33,7 @@ import { QuestionListComponent } from './question-list/question-list.component';
     MdRadioModule,
 
     // Core
-    CoreModule,
+    // CoreModule,
 
     // Component shared
     AlbumListComponent,

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { QuestionService } from '../../core';
 import { Ref } from '../../core';
-import { Question } from '../../bo/models/question.model';
+import { Question } from '../../core/models/question.model';
 
 @Component({
   selector: 'app-question-list',

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import { AlbumsService } from '../../bo/album.service';
-import { UserAlbumsService } from '../../bo/userAlbums.service';
+import { AlbumsService } from '../../core/services/album.service';
+import { UserAlbumsService } from '../../core/services/userAlbums.service';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Rx';
-import { Album } from '../../bo/models/album.model';
+import { Album } from '../../core/models/album.model';
 
 @Component({
   selector: 'app-album-list',

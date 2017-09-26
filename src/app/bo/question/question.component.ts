@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { QuestionService } from '../../core';
-import { Question } from '../models/question.model';
+import { Question } from '../../core/models/question.model';
 
 @Component({
   selector: 'app-bo-question',

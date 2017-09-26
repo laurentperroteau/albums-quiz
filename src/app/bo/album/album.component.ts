@@ -3,8 +3,8 @@ import { Observable } from 'rxjs/Rx';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { AlbumsService } from '../album.service';
-import { Album } from '../models/album.model';
+import { AlbumsService } from '../../core/services/album.service';
+import { Album } from '../../core/models/album.model';
 
 @Component({
   selector: 'app-bo-album',

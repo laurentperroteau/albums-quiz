@@ -8,8 +8,8 @@ import { SharedModule } from '../shared/shared.module';
 import { BoHomeComponent } from './home/home.component';
 
 import { UserService } from '../core/services/user.service';
-import { AlbumsService } from './album.service';
-import { UserAlbumsService } from './userAlbums.service';
+import { AlbumsService } from '../core/services/album.service';
+import { UserAlbumsService } from '../core/services/userAlbums.service';
 
 import { FirebaseComponent } from './firebase.component';
 
@@ -45,8 +45,8 @@ export const ROUTES: Routes = [
     BoQuestionFormComponent,
   ],
   providers: [
-    AlbumsService,
-    UserAlbumsService,
+    // AlbumsService,
+    // UserAlbumsService,
   ]
 })
 export class BoModule { }

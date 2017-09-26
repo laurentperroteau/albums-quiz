@@ -5,10 +5,9 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
-import { UserService } from '../core/services/user.service';
+import { UserService } from './user.service';
 
-import { AlbumsService } from './album.service';
-import { UserAlbums } from './models/user-albums.model';
+import { UserAlbums } from '../models/user-albums.model';
 
 @Injectable()
 export class UserAlbumsService {
@@ -18,7 +17,6 @@ export class UserAlbumsService {
   constructor(
     private _db: AngularFireDatabase,
     private _userService: UserService,
-    // private _albumService: AlbumsService,
   ) {
     this.user$ = this._userService.user$;
   }

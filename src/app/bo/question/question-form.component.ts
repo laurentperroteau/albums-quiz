@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { Component, Input, EventEmitter, Output, OnInit, OnChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
-import { Question } from '../models/question.model';
+import { Question } from '../../core/models/question.model';
 
 @Component({
   selector: 'app-bo-question-form',

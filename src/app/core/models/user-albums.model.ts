@@ -1,4 +1,4 @@
-import { BaseNode } from '../../core';
+import { BaseNode } from '../';
 
 export interface UserAlbums extends BaseNode {
   $value: string; // album title

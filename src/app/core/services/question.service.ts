@@ -11,7 +11,7 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
 
 import { Ref } from '../';
 
-import { Question } from '../../bo/models/question.model';
+import { Question } from '../models/question.model';
 import { UserService } from '../';
 
 // TODO: créer un classe parente qui match les erreur

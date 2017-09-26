@@ -6,7 +6,7 @@ import { MdRadioModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BoQuestionComponent } from './question.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlbumsService } from '../album.service';
+import { AlbumsService } from '../../core/services/album.service';
 
 xdescribe('BoQuestionComponent', () => {
   let component: BoQuestionComponent;

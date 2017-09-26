@@ -4,11 +4,11 @@ import { Component } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AlbumsService } from './album.service';
-import { UserAlbumsService } from './userAlbums.service';
+import { AlbumsService } from '../core/services/album.service';
+import { UserAlbumsService } from '../core/services/userAlbums.service';
 import { UserService } from '../core/services/user.service';
-import { Album } from './models/album.model';
-import { UserAlbums } from './models/user-albums.model';
+import { Album } from '../core/models/album.model';
+import { UserAlbums } from '../core/models/user-albums.model';
 import { Ref } from '../core/models/db.model';
 
 interface FirebaseItem {

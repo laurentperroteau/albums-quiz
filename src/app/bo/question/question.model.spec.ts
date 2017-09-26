@@ -1,4 +1,4 @@
-import { Question } from '../models/question.model';
+import { Question } from '../../core/models/question.model';
 
 /*describe('Question model', () => {
 

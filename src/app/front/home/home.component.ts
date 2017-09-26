@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-front-home',
   template: `
     <h2>Liste des albums</h2>
-    <!--<app-album-list></app-album-list>-->
+    <app-album-list></app-album-list>
     <!--<app-bo-question></app-bo-question>-->
     <!--<button [routerLink]="['/bo', 'edit', 'new']" md-fab color="primary"><md-icon>add</md-icon></button>-->
   `,

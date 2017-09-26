@@ -39,7 +39,7 @@ export const ROUTES: Routes = [
   ],
   imports: [
     BrowserAnimationsModule,
-    CommonModule,
+    // CommonModule, // TODO: move to core
 
     RouterModule,
     RouterModule.forRoot(ROUTES),
@@ -60,7 +60,7 @@ export const ROUTES: Routes = [
     MdButtonModule,
   ],
   exports: [
-    RouterModule
+    RouterModule // TODO: move to core
   ],
   providers: [],
   bootstrap: [
