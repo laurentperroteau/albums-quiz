@@ -4,12 +4,12 @@ import { Component } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Ref } from '../core/models/db.model';
+import { UserService } from '../core/services/user.service';
 import { AlbumsService } from '../core/services/album.service';
 import { UserAlbumsService } from '../core/services/userAlbums.service';
-import { UserService } from '../core/services/user.service';
 import { Album } from '../core/models/album.model';
 import { UserAlbums } from '../core/models/user-albums.model';
-import { Ref } from '../core/models/db.model';
 
 interface FirebaseItem {
   readonly uid: string;
@@ -81,9 +81,9 @@ export class FirebaseComponent {
 
   constructor(
     private _db: AngularFireDatabase,
-    private _userService: UserService,
-    private _albumService: AlbumsService,
-    private _usersAlbumsService: UserAlbumsService,
+    // private _userService: UserService,
+    // private _albumService: AlbumsService,
+    // private _usersAlbumsService: UserAlbumsService,
   ) {
     this.posts = this._db.list('/posts');
     // this.posts.subscribe(r => console.log(r));
@@ -102,15 +102,15 @@ export class FirebaseComponent {
   }*/
 
   addUserToFirstAlbum() {
-    const newAlbum = new Album({ name: 'The Grand Wazoo', year: 1973 });
-    this._albumService.add(newAlbum);
+    /*const newAlbum = new Album({ name: 'The Grand Wazoo', year: 1973 });
+    this._albumService.add(newAlbum);*/
   }
 
   getAlbumsByUser() {
     // TODO: ne pas subscribe dans component mais mapper le résultat
-    this._usersAlbumsService.getAlbumnsRefsConnectedUser().subscribe((u: UserAlbums[]) => {
+    /*this._usersAlbumsService.getAlbumnsRefsConnectedUser().subscribe((u: UserAlbums[]) => {
       this.albumsByUser$ = this._albumService.getListByRefs(u.map(a => a.$key));
-    })
+    })*/
   }
 
   getAlbumnsConnectedUser() {
@@ -127,8 +127,8 @@ export class FirebaseComponent {
   }
 
   editAlbum(key) {
-    this.albumToUpdate$ = this._albumService.getOne(key);
-    console.log(this.albumToUpdate$);
+    // this.albumToUpdate$ = this._albumService.getOne(key);
+    // console.log(this.albumToUpdate$);
     // this.albumToUpdate$.subscribe(a => console.log(a));
   }
 
@@ -141,10 +141,10 @@ export class FirebaseComponent {
   }
 
   login() {
-    this._userService.login();
+    // this._userService.login();
   }
 
   logout() {
-    this._userService.logout();
+    // this._userService.logout();
   }
 }

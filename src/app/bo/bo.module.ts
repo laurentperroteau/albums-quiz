@@ -7,10 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 
 import { BoHomeComponent } from './home/home.component';
 
-import { UserService } from '../core/services/user.service';
-import { AlbumsService } from '../core/services/album.service';
-import { UserAlbumsService } from '../core/services/userAlbums.service';
-
 import { FirebaseComponent } from './firebase.component';
 
 import { BoAlbumComponent } from './album/album.component';

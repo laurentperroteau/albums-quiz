@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
-import { BaseNode, WithModelFactory } from '../';
+import { WithModelFactory } from './model-fatory';
+import { BaseNode } from './db.model';
 
 export class Album extends WithModelFactory(BaseNode) {
   name: string;

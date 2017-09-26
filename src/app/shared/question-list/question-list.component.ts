@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-
 import { Observable } from 'rxjs/Rx';
 
-import { QuestionService } from '../../core';
-import { Ref } from '../../core';
+import { Component, Input, OnInit } from '@angular/core';
+
 import { Question } from '../../core/models/question.model';
+// import { Ref } from '../../core/models/db.model';
+import { QuestionService } from '../../core';
+
 
 @Component({
   selector: 'app-question-list',
@@ -21,7 +22,7 @@ import { Question } from '../../core/models/question.model';
 export class QuestionListComponent implements OnInit {
   questionsByAlbum$: Observable<Question[]>;
 
-  @Input() albumRef: Ref;
+  @Input() albumRef: any;
   @Input() baseLink: any[];
 
   constructor(

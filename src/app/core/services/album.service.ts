@@ -7,16 +7,16 @@ import * as firebase from 'firebase/app';
 import { Thenable } from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
-import { Ref } from '../';
-
 import { UserService } from './user.service';
 import { UserAlbumsService } from './userAlbums.service';
 
+import { Ref } from '../models/db.model';
 import { Album } from '../models/album.model';
 import { UserAlbums } from '../models/user-albums.model';
 
 // TODO: créer un classe parente qui match les erreur
-// TODO: rename to album
+// TODO: rename to albumimport { Album } from '../models/album.model';
+
 @Injectable()
 export class AlbumsService {
   node = 'albums';

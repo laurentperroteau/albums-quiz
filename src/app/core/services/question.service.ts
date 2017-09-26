@@ -9,10 +9,9 @@ import { FormBuilder } from '@angular/forms';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
-import { Ref } from '../';
-
+import { UserService } from './user.service';
 import { Question } from '../models/question.model';
-import { UserService } from '../';
+import { Ref } from '../models/db.model';
 
 // TODO: créer un classe parente qui match les erreur
 @Injectable()

@@ -4,10 +4,9 @@ import { Injectable } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-
+import { UserAlbums } from '../models/user-albums.model';
 import { UserService } from './user.service';
 
-import { UserAlbums } from '../models/user-albums.model';
 
 @Injectable()
 export class UserAlbumsService {

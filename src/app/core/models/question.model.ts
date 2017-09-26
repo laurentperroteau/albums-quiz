@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
-import { BaseNode, Ref, WithModelFactory } from '../';
+import { BaseNode, Ref } from './db.model';
+import { WithModelFactory } from './model-fatory';
 
 // TODO: add test
 export class Question extends WithModelFactory(BaseNode) {
