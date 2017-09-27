@@ -6,8 +6,9 @@ import { WithModelFactory } from './model-fatory';
 // TODO: add test
 export class Question extends WithModelFactory(BaseNode) {
   label: string;
-  radios?: QuestionRadios[];
-  radioResponse?: string;
+  radios: QuestionRadios[];
+  radioResponse: QuestionRadios;
+  userResponse: any;
   albumRef: Ref;
 
   constructor(objRaw?: Partial<any>) {
@@ -15,7 +16,8 @@ export class Question extends WithModelFactory(BaseNode) {
     const objDefault: Partial<any> = {
       label: '',
       radios: [new QuestionRadios(), new QuestionRadios()],
-      radioResponse: ''
+      radioResponse: null,
+      userResponse: null,
     };
 
     _.merge(this, objDefault, objRaw);
@@ -23,8 +25,10 @@ export class Question extends WithModelFactory(BaseNode) {
     console.debug('new question', this);
   }
 
-  // exemple de méthode factory spécifique au model
-  getDuplicata() {}
+  isResponseValid() {
+    this.updateFromForm();
+    return this.radioResponse.key === _.get(this.userResponse, 'key');
+  }
 }
 
 export class QuestionRadios {

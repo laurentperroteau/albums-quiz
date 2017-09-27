@@ -14,7 +14,7 @@ import { Question, QuestionService } from '../../core';
     </h2>
     <app-front-question-form
       [question]="(question$ | async)"
-      (onUpdate)="onAnswer($event)">
+      (onUpdate)="onResponse($event)">
     </app-front-question-form>
   `,
 })
@@ -41,11 +41,16 @@ export class FrontQuestionComponent implements OnInit {
     });
   }
 
-  onAnswer(answer: Question) {
-    console.log('la réponse', answer);
+  onResponse(questionWithResponse: Question) {
+    console.log('la réponse', questionWithResponse);
+    if (questionWithResponse.isResponseValid()) {
+      this._redirectToQuestionList();
+    } else {
+      console.debug('Pas la bonne réponse :(');
+    }
   }
 
-  private _redirectToBo() {
-    this._router.navigate(['/bo']);
+  private _redirectToQuestionList() {
+    // this._router.navigate(['../../'], { relativeTo: this._route })
   }
 }

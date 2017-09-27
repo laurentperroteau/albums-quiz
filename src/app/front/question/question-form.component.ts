@@ -11,7 +11,7 @@ import { Question } from '../../core/models/question.model';
     <div *ngIf="question">
       <p>{{ question.label }}</p>
       <form [formGroup]="question.form">
-        <md-radio-group formControlName="radioResponse">
+        <md-radio-group formControlName="userResponse">
           <div formArrayName="radios">
             <md-radio-button *ngFor="let radio of radios.controls;" [value]="radio.value">
               {{ radio.value.label }}
