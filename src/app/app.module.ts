@@ -20,7 +20,7 @@ import { AppComponent } from './app.component';
 export const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: '/bo',
+    redirectTo: '/quiz',
     pathMatch: 'full'
   },
   {

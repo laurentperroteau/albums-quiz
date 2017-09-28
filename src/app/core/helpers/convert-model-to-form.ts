@@ -13,7 +13,12 @@ function isObjectNotArray(obj: any) {
   return _.isObject(obj) && !_.isArray(obj)
 }
 
-export function convertModelToForm(Obj: any, fbInstance: FormBuilder, propertiesToIgnore = [], additionalActionOnControl?: ControlCallback): ModelToForm {
+export function convertModelToForm(
+  Obj: any,
+  fbInstance: FormBuilder,
+  propertiesToIgnore = [],
+  additionalActionOnControl?: ControlCallback,
+): ModelToForm {
   const form: ModelToForm = {};
 
   Object.keys(Obj).forEach((key: string) => {
@@ -29,7 +34,13 @@ export function convertModelToForm(Obj: any, fbInstance: FormBuilder, properties
   return form;
 }
 
-function convertDataToControl(data: any, key: string, fbInstance: FormBuilder, propertiesToIgnore = [], additionalActionOnControl?: ControlCallback) {
+function convertDataToControl(
+  data: any,
+  key: string,
+  fbInstance: FormBuilder,
+  propertiesToIgnore = [],
+  additionalActionOnControl?: ControlCallback,
+) {
   let control: FormControl | FormArray;
 
   if (_.isArray(data)) {
