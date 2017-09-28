@@ -52,8 +52,9 @@ export class FrontQuestionComponent implements OnInit {
 
   private _redirectToQuestionList() {
     console.debug('TODO : ne fonctionne pas, un problème de module ou configuration');
+    this._router.navigate(['../../'], { relativeTo: this._route });
     /*
-    Solution qui devrait fonctionner mais recharge la page
+    Solution qui devrait fonctionner mais recharge la page (dans tous les cas utiliser un service)
     this._router.navigate(['/quiz', 'album', '-Ku455YIEpbVRNyvVEdm'], { relativeTo: this._route });
     ou
     this._router.navigate(['../../'], { relativeTo: this._route })

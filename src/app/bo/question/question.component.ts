@@ -54,6 +54,6 @@ export class BoQuestionComponent implements OnInit {
   }
 
   private _redirectToBo() {
-    this._router.navigate(['/bo']);
+    this._router.navigate(['../../../'], { relativeTo: this._route });
   }
 }
