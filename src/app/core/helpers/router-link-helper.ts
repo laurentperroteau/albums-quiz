@@ -1,4 +1,3 @@
-// TODO: spec
 export namespace RouterLinkHelper {
 
   export function push(baseLink: string[], toPush) {
