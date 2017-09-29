@@ -5,6 +5,7 @@ import { WithModelFactory } from './model-fatory';
 
 // TODO: add test
 export class Question extends WithModelFactory(BaseNode) {
+  '.indexOn': 'label';
   label: string;
   radios: QuestionRadios[];
   radioResponse: QuestionRadios;

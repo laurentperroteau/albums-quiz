@@ -9,7 +9,7 @@ import { convertModelToForm } from '../helpers/convert-model-to-form';
 type Constructor<T> = new(...args: any[]) => T;
 
 // TODO: devoir ignorer des propriétés n'est pas idéal, voir pour créer un objet factory pour le model
-const FACTORY_PROPERTIES = ['form', 'obs$'];
+const FACTORY_PROPERTIES = ['.indexOn', 'form', 'obs$'];
 
 // As mixin
 export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class extends Base {

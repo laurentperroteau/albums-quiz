@@ -21,15 +21,6 @@ import { Question } from '../../core/models/question.model';
           </li>
         </ul>
         Clé de la réponse : <input formControlName="radioResponse"/>
-        <!--
-        TODO: pour la réponse
-        <md-radio-group formControlName="radioResponse">
-          <div formArrayName="radios">
-            <md-radio-button *ngFor="let radio of radios.controls;" [value]="radio.value">
-              {{ radio.value.label }}
-            </md-radio-button>
-          </div>
-        </md-radio-group>-->
         <button type="submit" (click)="submit()">{{ submitLabel }}</button>
       </form>
     </div>
