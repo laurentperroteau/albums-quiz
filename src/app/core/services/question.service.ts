@@ -112,7 +112,7 @@ export class QuestionService {
     return question$;
   }
 
-  getQuestionsByAlbum(albumRef: Ref) {
+  getListByAlbum(albumRef: Ref) {
     return this._db.list('/' + this.node, {
       query: {
         orderByChild: ('albumRef' as keyof Question),

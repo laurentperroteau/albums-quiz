@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { AlbumsService } from '../../core/services/album.service';
 import { UserAlbumsService } from '../../core/services/userAlbums.service';
@@ -19,19 +19,19 @@ import { Album, RouterLinkHelper } from '../../core';
     </ul>
   `,
 })
-export class AlbumListComponent {
+export class AlbumListComponent implements OnInit {
   albumsByUser$: Observable<Album[]>;
 
   @Input() baseLink: string[];
+  @Input() restrictByUser = true;
 
   linkPush = RouterLinkHelper.push;
 
   constructor(private _albumService: AlbumsService) {
-    this.getAlbumsByUser();
+    console.log('this.restrictByUser', this.restrictByUser);
   }
 
-  getAlbumsByUser() {
-    // TODO: utiliser user-albums resource (avec juste le nom)
-    this.albumsByUser$ = this._albumService.getListRefsConnectedUser();
+  ngOnInit() {
+    this.albumsByUser$ = this.restrictByUser ? this._albumService.getListByUser() : this._albumService.getList();
   }
 }

@@ -36,6 +36,6 @@ export class QuestionListComponent implements OnInit {
   }
 
   getQuestionsByAlbum() {
-    return this._questionService.getQuestionsByAlbum(this.albumRef);
+    return this._questionService.getListByAlbum(this.albumRef);
   }
 }

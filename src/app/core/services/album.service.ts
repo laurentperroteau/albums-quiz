@@ -82,7 +82,7 @@ export class AlbumsService {
     return this.albums$;
   }
 
-  getListRefsConnectedUser() {
+  getListByUser() {
     return this.user$.flatMap(u => {
       return this._db.list('/' + this.node, {
         query: {
@@ -91,16 +91,5 @@ export class AlbumsService {
         }
       });
     });
-  }
-
-  getListByRefs(refs: Ref[]) {
-    return this.albums$
-      .map(as => as.filter(a => refs.indexOf(a.$key) !== -1))
-      // Filter ne fonctionne pas, il renvoi la liste complète
-      /*.flatMap(data => data)
-      .filter((a: Album) => {
-        console.log(a);
-        return refs.indexOf(a.$key) !== -1
-      })*/;
   }
 }

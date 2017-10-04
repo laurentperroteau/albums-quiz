@@ -28,7 +28,7 @@ class QuestionServiceStub {
     })
   }
 
-  /*getQuestionsByAlbum(albumRef: Ref) {
+  /*getListByAlbum(albumRef: Ref) {
     return Observable.of([
       new Album({ name: 'Fun House', year: 1970 }),
       new Album({ name: 'Pets Sounds', year: 1966 }),
@@ -74,7 +74,7 @@ describe('QuestionListComponent', () => {
     const app = fixture.debugElement.componentInstance;
     app.albumRef = 'testAlbumRef';
     console.log(QuestionService);
-    /*spyOn(QuestionService, 'getQuestionsByAlbum')
+    /*spyOn(QuestionService, 'getListByAlbum')
       .and
       .returnValue(
         Observable.of([
