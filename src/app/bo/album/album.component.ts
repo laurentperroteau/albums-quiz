@@ -57,7 +57,7 @@ export class BoAlbumComponent implements OnInit {
       // TODO: problème, en utilisant update depuis le composant, pas d'accès au service d'ajout de message de success
       updatedAlbum.save().then(this._redirectToBo.bind(this));
     } else {
-      this._albumService.add(updatedAlbum).then(this._redirectToBo.bind(this));
+      this._albumService.add(updatedAlbum).subscribe(this._redirectToBo.bind(this));
     }
   }
 

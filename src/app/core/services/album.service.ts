@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs/Rx';
+import * as _ from 'lodash'
 
 import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -7,6 +8,7 @@ import * as firebase from 'firebase/app';
 import { Thenable } from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
+import { RequestService } from './request.service';
 import { UserService } from './user.service';
 import { UserAlbumsService } from './userAlbums.service';
 
@@ -30,53 +32,33 @@ export class AlbumsService {
   constructor(
     private _fb: FormBuilder,
     private _db: AngularFireDatabase,
+    private _requestService: RequestService,
     private _userService: UserService,
     private _usersAlbumService: UserAlbumsService,
   ) {
     this.user$ = this._userService.user$;
     this.albums$ = this._db.list('/' + this.node);
-    // this.userAlbums$ = this._db.list('/' + UserAlbums.node);
   }
 
-  // TODO: move to parent class
-  resolvePromise(promise) {
-    promise.then(
-      (success) => {
-        if (success instanceof Observable) {
-          success.subscribe(msj => {
-            console.log('SUCCESS', msj)
-          })
-        } else {
-          console.log('SUCCESS', success)
-        }
-      },
-      (error) => {
-        if (error instanceof Observable) {
-          error.subscribe(msj => {
-            console.log('ERROR', msj)
-          })
-        } else {
-          console.log('ERROR', error)
-        }
-      }
-    )
-  }
+  add(album: Album): Observable<string> {
+    // Add question...
+    const newAlbum: Album = album.updateFromFormAndReturnIt();
 
-  add(album: Album): Thenable<string> {
-    // Add album...
-    const newAlbum =  album.updateFromFormAndReturnIt();
-    // TODO: ne fonctionne plus
-    const addAndSetUser =
-      this.albums$.push(newAlbum).then(
-        (newAlbumRef: firebase.database.ThenableReference) => {
-          // ... and users relation
-          return this.setToUser(newAlbum, newAlbumRef);
-        },
-        error => Observable.of(error)
-      );
+    const onGettingUser$ = this.user$.flatMap(u => {
+      newAlbum.userRef = u.uid;
 
-    this.resolvePromise(addAndSetUser);
-    return addAndSetUser;
+      const onAdding =
+        this.albums$.push(newAlbum).then(
+          (newQuestionRef: firebase.database.ThenableReference) => {
+            return new Album(_.merge({$key: newQuestionRef.key}, newAlbum));
+          },
+          error => Promise.resolve(error)
+        );
+
+      return this._requestService.sharePromise(onAdding);
+    });
+
+    return this._requestService.shareObs(onGettingUser$);
   }
 
   setToUser(album: Album, newAlbumRef: firebase.database.ThenableReference): Observable<null> {
@@ -100,11 +82,14 @@ export class AlbumsService {
     return this.albums$;
   }
 
-  getListRefsConnectedUser(): Observable<Album[]> { // TODO: comment renvoyé un Firebase observable ?
+  getListRefsConnectedUser() {
     return this.user$.flatMap(u => {
-      return this._db.list(`${this.nodeUserRelation}/${u.uid}`).flatMap((ua: UserAlbums[]) => {
-        return this.getListByRefs(ua.map(a => a.$key));
-      })
+      return this._db.list('/' + this.node, {
+        query: {
+          orderByChild: ('userRef' as keyof Album),
+          equalTo: u.uid,
+        }
+      });
     });
   }
 

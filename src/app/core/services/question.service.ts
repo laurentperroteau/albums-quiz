@@ -9,7 +9,9 @@ import { FormBuilder } from '@angular/forms';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
+import { RequestService } from './request.service';
 import { UserService } from './user.service';
+
 import { Question } from '../models/question.model';
 import { Ref } from '../models/db.model';
 
@@ -24,6 +26,7 @@ export class QuestionService {
   constructor(
     private _fb: FormBuilder,
     private _db: AngularFireDatabase,
+    private _requestService: RequestService,
     private _userService: UserService,
   ) {
     this.user$ = this._userService.user$;
@@ -64,32 +67,28 @@ export class QuestionService {
       }
     );
 
-    return obs;
+    return obs.shareObs();
   }
 
   add(question: Question): Observable<string> {
     // Add question...
     const newQuestion: Question = question.updateFromFormAndReturnIt();
 
-    const test = this.user$.flatMap(u => {
+    const onGettingUser$ = this.user$.flatMap(u => {
       newQuestion.userRef = u.uid;
 
-      const add$ =
+      const onAdding =
         this.questions$.push(newQuestion).then(
           (newQuestionRef: firebase.database.ThenableReference) => {
             return new Question(_.merge({$key: newQuestionRef.key}, newQuestion));
-            /*return this.setToAlbum(
-              new Question(_.merge({$key: newQuestionRef.key}, newQuestion))
-            );*/
           },
           error => Promise.resolve(error)
         );
 
-      this.resolvePromise(add$);
-      return add$;
+      return this._requestService.sharePromise(onAdding);
     });
 
-    return this.publishRequest(test);
+    return this._requestService.shareObs(onGettingUser$);
   }
 
   /*setToAlbum(question: Question): firebase.Promise<void> {
@@ -116,7 +115,7 @@ export class QuestionService {
   getQuestionsByAlbum(albumRef: Ref) {
     return this._db.list('/' + this.node, {
       query: {
-        orderByChild: 'albumRef',
+        orderByChild: ('albumRef' as keyof Question),
         equalTo: albumRef,
       }
     });

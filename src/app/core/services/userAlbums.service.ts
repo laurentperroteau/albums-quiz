@@ -17,7 +17,7 @@ export class UserAlbumsService {
     private _db: AngularFireDatabase,
     private _userService: UserService,
   ) {
-    this.user$ = this._userService.user$;
+    // this.user$ = this._userService.user$;
   }
 
   getAlbumnsRefsConnectedUser(): Observable<UserAlbums[]> { // TODO: ne retourne pas firebase obj
