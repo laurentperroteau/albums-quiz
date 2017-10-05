@@ -16,7 +16,7 @@ import { Album } from '../../core/models/album.model';
       </form>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush // TODO: a confirmer
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoAlbumFormComponent implements OnInit, OnChanges {
   @Input() isNew: string;

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { Question } from '../../core/models/question.model';
 // import { Ref } from '../../core/models/db.model';
@@ -18,6 +18,7 @@ import { QuestionService, RouterLinkHelper } from '../../core';
       </li>
     </ul>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionListComponent implements OnInit {
   questionsByAlbum$: Observable<Question[]>;

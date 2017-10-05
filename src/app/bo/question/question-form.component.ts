@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
-import { Component, Input, EventEmitter, Output, OnInit, OnChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Input, EventEmitter, Output, OnInit, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { FormArray, FormBuilder } from '@angular/forms';
 
 import { Question } from '../../core/models/question.model';
 
@@ -25,6 +25,7 @@ import { Question } from '../../core/models/question.model';
       </form>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoQuestionFormComponent implements OnInit, OnChanges {
   @Input() isNew: string;

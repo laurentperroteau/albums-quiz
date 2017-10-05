@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs/Rx';
-
 import { Component } from '@angular/core';
 
 import * as firebase from 'firebase/app'

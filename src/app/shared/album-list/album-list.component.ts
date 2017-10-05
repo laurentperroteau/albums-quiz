@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { AlbumsService } from '../../core/services/album.service';
 import { UserAlbumsService } from '../../core/services/userAlbums.service';
@@ -18,6 +18,7 @@ import { Album, RouterLinkHelper } from '../../core';
       </li>
     </ul>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumListComponent implements OnInit {
   albumsByUser$: Observable<Album[]>;
