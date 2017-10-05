@@ -84,12 +84,13 @@ export class AlbumsService {
 
   getListByUser() {
     return this.user$.flatMap(u => {
-      return this._db.list('/' + this.node, {
+      const opt = !u.uid ? {} : {
         query: {
           orderByChild: ('userRef' as keyof Album),
           equalTo: u.uid,
         }
-      });
+      };
+      return this._db.list('/' + this.node, opt);
     });
   }
 }

@@ -17,22 +17,22 @@ import { UserService } from './core/services/user.service';
           Répondre aux questions
         </button>
         &nbsp;
-        <button routerLink="/bo" routerLinkActive="mat-accent" md-raised-button color="primary">Créer des questions</button>
+        <!-- TODO: add guard -->
+        <button *ngIf="isLogin()" routerLink="/bo" routerLinkActive="mat-accent" md-raised-button color="primary">
+          Créer des questions
+        </button>
         &nbsp;
-        <div *ngIf="user">Bonjour {{ user.displayName }}</div>
-        <button md-raised-button color="primary" *ngIf="!user" (click)="login()">
+        <div *ngIf="isLogin()">Bonjour {{ user.displayName }}</div>
+        <button *ngIf="!isLogin()" md-raised-button color="primary" (click)="login()">
           Login
         </button>
         &nbsp;
-        <button md-raised-button color="primary" *ngIf="user" (click)="logout()">
+        <button *ngIf="isLogin()" md-raised-button color="primary" (click)="logout()">
           Logout
         </button>
     </md-toolbar>
-    <div *ngIf="user">
+    <div>
       <router-outlet></router-outlet>
-    </div>
-    <div *ngIf="!user">
-      Vous devez vous connecter !
     </div>
   `,
   styles: [
@@ -56,5 +56,9 @@ export class AppComponent {
 
   logout() {
     this._userService.logout();
+  }
+
+  isLogin() {
+    return this.user && !this.user.isAnonymous;
   }
 }

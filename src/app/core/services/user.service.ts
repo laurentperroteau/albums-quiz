@@ -8,12 +8,20 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class UserService {
   user$: Observable<firebase.User>;
 
-  constructor(private _afAuth: AngularFireAuth) {
+  constructor(
+    private _afAuth: AngularFireAuth) {
     this.user$ = this._afAuth.authState;
+
+    // Sign anonymously until login
+    this._afAuth.auth.signInAnonymously();
   }
 
   login() {
     this._afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
+  isLogin(): Observable<boolean> {
+    return this.user$.map(u => u && !u.isAnonymous);
   }
 
   logout() {
