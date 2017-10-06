@@ -9,7 +9,7 @@ import { UserService } from './core/services/user.service';
   template: `
     <!-- TODO: app-shell directive -->
     <md-toolbar color="primary">
-      <span>{{ title }}</span>
+      <span e2e="title">{{ title }}</span>
       <span class="example-spacer"></span>
         <button routerLink="/quiz" routerLinkActive="mat-accent" md-raised-button color="primary">
           Répondre aux questions
