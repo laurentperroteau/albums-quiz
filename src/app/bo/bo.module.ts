@@ -7,8 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 
 import { BoHomeComponent } from './home/home.component';
 
-import { FirebaseComponent } from './firebase.component';
-
 import { BoAlbumComponent } from './album/album.component';
 import { BoAlbumFormComponent } from './album/album-form.component';
 
@@ -33,16 +31,11 @@ export const ROUTES: Routes = [
     MdIconModule,
   ],
   declarations: [
-    FirebaseComponent,
     BoHomeComponent,
     BoAlbumFormComponent,
     BoAlbumComponent,
     BoQuestionComponent,
     BoQuestionFormComponent,
-  ],
-  providers: [
-    // AlbumsService,
-    // UserAlbumsService,
   ]
 })
 export class BoModule { }
