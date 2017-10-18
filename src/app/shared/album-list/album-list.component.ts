@@ -2,10 +2,9 @@ import { Observable } from 'rxjs/Rx';
 
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-import { AlbumsService } from '../../core/services/album.service';
-import { UserAlbumsService } from '../../core/services/userAlbums.service';
-import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { Album, RouterLinkHelper } from '../../core';
+
+import { AlbumsService } from '../../core/services/album.service';
 
 @Component({
   selector: 'app-album-list',

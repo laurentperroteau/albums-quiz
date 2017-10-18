@@ -11,13 +11,13 @@ import { Question } from '../../core/models/question.model';
     <div *ngIf="question">
       <p>{{ question.label }}</p>
       <form [formGroup]="question.form">
-        <md-radio-group formControlName="userResponse">
+        <mat-radio-group formControlName="userResponse">
           <div formArrayName="radios">
-            <md-radio-button *ngFor="let radio of radios.controls;" [value]="radio.value">
+            <mat-radio-button *ngFor="let radio of radios.controls;">
               {{ radio.value.label }}
-            </md-radio-button>
+            </mat-radio-button>
           </div>
-        </md-radio-group>
+        </mat-radio-group>
         <button type="submit" (click)="submit()">Répondre</button>
       </form>
     </div>

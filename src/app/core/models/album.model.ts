@@ -6,7 +6,7 @@ import { BaseNode, Ref } from './db.model';
 export class Album extends WithModelFactory(BaseNode) {
   name: string;
   year: number;
-  userRef: Ref;
+  // userRef: Ref; // TODO: déjà dans baseNode
 
   constructor(objRaw?: Partial<Album>) {
     super();

@@ -2,9 +2,9 @@ import { Observable } from 'rxjs/Rx';
 
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-import { Question } from '../../core/models/question.model';
-// import { Ref } from '../../core/models/db.model';
 import { QuestionService, RouterLinkHelper } from '../../core';
+
+import { Question } from '../../core/models/question.model';
 
 
 @Component({
@@ -33,10 +33,6 @@ export class QuestionListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.questionsByAlbum$ = this.getQuestionsByAlbum();
-  }
-
-  getQuestionsByAlbum() {
-    return this._questionService.getListByAlbum(this.albumRef);
+    this.questionsByAlbum$ = this._questionService.getListByAlbum(this.albumRef);
   }
 }

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { QuestionService } from '../../core';
-import { MdRadioModule } from '@angular/material';
+import { MatRadioModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BoQuestionComponent } from './question.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +19,7 @@ xdescribe('BoQuestionComponent', () => {
       ],
       imports: [
         ReactiveFormsModule,
-        MdRadioModule
+        MatRadioModule,
       ],
       providers: [
         ActivatedRoute,

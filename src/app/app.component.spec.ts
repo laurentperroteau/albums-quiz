@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { MdToolbarModule, MdButtonModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule } from '@angular/material';
 
 import { UserService } from './core/services/user.service';
 
@@ -30,8 +30,8 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         AngularFireAuthModule,
-        MdToolbarModule,
-        MdButtonModule,
+        MatToolbarModule,
+        MatButtonModule,
       ],
       declarations: [
         AppComponent

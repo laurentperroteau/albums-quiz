@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireObject } from 'angularfire2/database';
 
 import { convertModelToForm } from '../helpers/convert-model-to-form';
 
@@ -14,7 +14,7 @@ const FACTORY_PROPERTIES = ['.indexOn', 'form', 'obs$'];
 // As mixin
 export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class extends Base {
   form?: FormGroup;
-  obs$?: FirebaseObjectObservable<any>;
+  obs$?: AngularFireObject<any>; // TODO: Observable ?
 
   get() {
     return _.pick(

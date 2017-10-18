@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,7 +9,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { environment } from '../environments/environment';
 
-import { MdToolbarModule, MdButtonModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule } from '@angular/material';
 
 import { CoreModule } from './core/core.module';
 
@@ -39,7 +38,6 @@ export const ROUTES: Routes = [
   ],
   imports: [
     BrowserAnimationsModule,
-    // CommonModule, // TODO: move to core
 
     RouterModule,
     RouterModule.forRoot(ROUTES),
@@ -56,8 +54,8 @@ export const ROUTES: Routes = [
     CoreModule,
 
     // Lib
-    MdToolbarModule,
-    MdButtonModule,
+    MatToolbarModule,
+    MatButtonModule,
   ],
   exports: [
     RouterModule // TODO: move to core

@@ -5,8 +5,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import * as firebase from 'firebase/app';
-import { Thenable } from 'firebase/app';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 import { RequestService } from './request.service';
 import { UserService } from './user.service';
@@ -14,10 +13,6 @@ import { UserAlbumsService } from './userAlbums.service';
 
 import { Ref } from '../models/db.model';
 import { Album } from '../models/album.model';
-import { UserAlbums } from '../models/user-albums.model';
-
-// TODO: créer un classe parente qui match les erreur
-// TODO: rename to albumimport { Album } from '../models/album.model';
 
 @Injectable()
 export class AlbumsService {
@@ -25,9 +20,7 @@ export class AlbumsService {
   nodeUserRelation = 'user-albums';
   user$: Observable<firebase.User>;
 
-  albums$: FirebaseListObservable<Album[]>;
-
-  successObs: Observable<string>[];
+  albums$: AngularFireList<Album[]>;
 
   constructor(
     private _fb: FormBuilder,
@@ -48,7 +41,7 @@ export class AlbumsService {
       newAlbum.userRef = u.uid;
 
       const onAdding =
-        this.albums$.push(newAlbum).then(
+        this.albums$.push([newAlbum]).then(
           (newQuestionRef: firebase.database.ThenableReference) => {
             return new Album(_.merge({$key: newQuestionRef.key}, newAlbum));
           },
@@ -67,30 +60,32 @@ export class AlbumsService {
     });
   }
 
-  getOne(ref: Ref): FirebaseObjectObservable<Album> {
+  getOne(ref: Ref): Observable<Album> {
     const album$ = this._db.object(`${this.node}/${ref}`)
+      .valueChanges()
       .map(rawAlbum => {
         const album = new Album(rawAlbum);
         album.setObs(album$);
         return album;
-      }) as FirebaseObjectObservable<Album>;
+      });
 
     return album$;
   }
 
-  getList(): FirebaseListObservable<Album[]> {
-    return this.albums$;
+  getList(): Observable<Album[]> {
+    return this.albums$.valueChanges();
   }
 
-  getListByUser() {
+  getListByUser(): Observable<Album[]> {
     return this.user$.flatMap(u => {
-      const opt = !u.uid ? {} : {
-        query: {
-          orderByChild: ('userRef' as keyof Album),
-          equalTo: u.uid,
+      const opt = (ref) => {
+        if (!u.uid) {
+          return;
+        } else {
+          return ref.orderByChild(('userRef' as keyof Album)).equalTo(u.uid);
         }
       };
-      return this._db.list('/' + this.node, opt);
+      return this._db.list('/' + this.node, opt).valueChanges();
     });
   }
 }

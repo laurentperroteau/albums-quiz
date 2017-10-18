@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RouterModule } from '@angular/router';
-import { MdRadioModule } from '@angular/material';
+import { MatRadioModule } from '@angular/material';
 
 // import { CoreModule } from '../core/core.module';
 
@@ -16,7 +16,7 @@ import { QuestionListComponent } from './question-list/question-list.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    MdRadioModule,
+    MatRadioModule,
 
     // Core
     // CoreModule, // TODO: c'est correct ???, utilser Angury pour vérifier les injections
@@ -30,7 +30,7 @@ import { QuestionListComponent } from './question-list/question-list.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MdRadioModule,
+    MatRadioModule,
 
     // Core
     // CoreModule,

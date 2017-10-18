@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 
+// TODO: créer type pour firebase.user, afin de ne pas importer tout firebase à chaque fois
 @Injectable()
 export class UserService {
   user$: Observable<firebase.User>;

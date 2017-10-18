@@ -10,8 +10,8 @@ import { Observable } from 'rxjs/Observable';
     </div>
     <h2>Liste des albums</h2>
     <app-album-list [baseLink]="['/bo', 'edit']"></app-album-list>
-    <button [routerLink]="['/bo', 'edit', 'new']" md-fab color="primary">
-      <md-icon>add</md-icon>
+    <button [routerLink]="['/bo', 'edit', 'new']" mat-fab color="primary">
+      <mat-icon>add</mat-icon>
     </button>
   `,
 })

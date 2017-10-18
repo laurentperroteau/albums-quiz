@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MdButtonModule, MdIconModule } from '@angular/material';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -24,8 +24,8 @@ export const ROUTES: Routes = [
     SharedModule,
 
     // Lib
-    MdButtonModule,
-    MdIconModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   declarations: [
     FrontHomeComponent,

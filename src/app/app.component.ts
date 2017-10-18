@@ -8,27 +8,27 @@ import { UserService } from './core/services/user.service';
   selector: 'app-root',
   template: `
     <!-- TODO: app-shell directive -->
-    <md-toolbar color="primary">
+    <mat-toolbar color="primary">
       <span e2e="title">{{ title }}</span>
       <span class="example-spacer"></span>
-        <button routerLink="/quiz" routerLinkActive="mat-accent" md-raised-button color="primary">
+        <button routerLink="/quiz" routerLinkActive="mat-accent" mat-raised-button color="primary">
           Répondre aux questions
         </button>
         &nbsp;
         <!-- TODO: add guard -->
-        <button *ngIf="isLogin()" routerLink="/bo" routerLinkActive="mat-accent" md-raised-button color="primary">
+        <button *ngIf="isLogin()" routerLink="/bo" routerLinkActive="mat-accent" mat-raised-button color="primary">
           Créer des questions
         </button>
         &nbsp;
         <div *ngIf="isLogin()">Bonjour {{ user.displayName }}</div>
-        <button *ngIf="!isLogin()" md-raised-button color="primary" (click)="login()">
+        <button *ngIf="!isLogin()" mat-raised-button color="primary" (click)="login()">
           Login
         </button>
         &nbsp;
-        <button *ngIf="isLogin()" md-raised-button color="primary" (click)="logout()">
+        <button *ngIf="isLogin()" mat-raised-button color="primary" (click)="logout()">
           Logout
         </button>
-    </md-toolbar>
+    </mat-toolbar>
     <div>
       <router-outlet></router-outlet>
     </div>
