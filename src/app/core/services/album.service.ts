@@ -20,7 +20,7 @@ export class AlbumsService {
   nodeUserRelation = 'user-albums';
   user$: Observable<firebase.User>;
 
-  albums$: AngularFireList<Album[]>;
+  albums$: AngularFireList<Album>;
 
   constructor(
     private _fb: FormBuilder,
@@ -41,7 +41,7 @@ export class AlbumsService {
       newAlbum.userRef = u.uid;
 
       const onAdding =
-        this.albums$.push([newAlbum]).then(
+        this.albums$.push(newAlbum).then(
           (newQuestionRef: firebase.database.ThenableReference) => {
             return new Album(_.merge({$key: newQuestionRef.key}, newAlbum));
           },

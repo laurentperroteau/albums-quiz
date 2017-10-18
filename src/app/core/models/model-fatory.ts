@@ -42,13 +42,8 @@ export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class ex
     }
   }
 
-  updateFromForm() {
-    _.merge(this, this.form.value);
-    return this.get();
-  }
-
   updateFromFormAndReturnIt() {
-    _.merge(this, this.form.value);
+    _.merge(this, this.form.value, this._extra());
     return this.get();
   }
 
@@ -59,5 +54,10 @@ export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class ex
   save() {
     console.log('save', this.updateFromFormAndReturnIt());
     return this.obs$.update(this.updateFromFormAndReturnIt()); // update method include in Obs replace extra service
+  }
+
+  private _extra() {
+    const toKebab = this.form.value.name || this.form.value.label || '';
+    return { key: _.kebabCase(toKebab) };
   }
 };

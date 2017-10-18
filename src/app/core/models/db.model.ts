@@ -1,8 +1,8 @@
 export type Ref = string | null;
 
 export class FirebaseNode {
-  // readonly $key?: Ref; // === uid in database
-  // $exists?: Function;
+  readonly $key?: Ref; // === uid in database
+  $exists?: Function;
   key: string | null;
   /**
    * TODO:

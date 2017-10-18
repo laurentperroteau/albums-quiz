@@ -27,7 +27,7 @@ export class Question extends WithModelFactory(BaseNode) {
   }
 
   isResponseValid() {
-    this.updateFromForm();
+    this.updateFromFormAndReturnIt();
     return this.radioResponse === _.get(this.userResponse, 'key');
   }
 }

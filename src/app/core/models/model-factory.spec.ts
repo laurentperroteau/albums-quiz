@@ -31,7 +31,7 @@ describe('Model factory', () => {
     test.id = 2;
     test.createForm(fb);
     test.form.controls.id.setValue(3);
-    test.updateFromForm();
+    test.updateFromFormAndReturnIt();
     expect(test.id).toEqual(3);
   }));
 });

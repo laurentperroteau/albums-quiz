@@ -20,7 +20,7 @@ export class QuestionService {
   node = 'questions';
   user$: Observable<firebase.User>;
 
-  questions$: AngularFireList<Question[]>;
+  questions$: AngularFireList<Question>;
 
   constructor(
     private _fb: FormBuilder,
