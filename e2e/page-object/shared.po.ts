@@ -26,7 +26,7 @@ export class SharedPage extends CommonPage {
         attributeSelector = `input[placeholder="${input.placeholder}"]`;
       }
 
-      let elem = element(
+      const elem = element(
         by.css(attributeSelector)
       );
 

@@ -2,6 +2,7 @@ export type Ref = string | null;
 
 export class FirebaseNode {
   readonly $key?: Ref; // === uid in database
+  // TODO: ajouter la key via un cloud functionl
   $exists?: Function;
   key: string | null;
   /**

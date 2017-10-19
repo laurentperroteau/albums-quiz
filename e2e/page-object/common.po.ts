@@ -1,6 +1,6 @@
 import { HelperE2E } from '../helper-e2e';
 
-import { browser, element, by } from 'protractor';
+import { browser, element, by, ElementFinder } from 'protractor';
 
 // Common to all aplication
 export class CommonPage {
@@ -92,5 +92,18 @@ export class CommonPage {
     `).then((value: any) => {
       return JSON.parse(value) || {};
     });
+  }
+
+  fillByInputType(type: string, value: string) {
+    return this.fillByElem(
+      element(
+        by.css(`input[type="${type}"]`)
+      ),
+      value
+    );
+  };
+
+  fillByElem(elem: ElementFinder, value: string) {
+    return elem.sendKeys(value);
   }
 }
