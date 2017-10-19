@@ -7,6 +7,7 @@
 
 # dependencies
 /node_modules
+/functions/node_modules
 
 # IDEs and editors
 /.idea
@@ -32,6 +33,7 @@
 npm-debug.log
 testem.log
 /typings
+firebase-debug.log
 
 # e2e
 /e2e/*.js
