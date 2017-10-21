@@ -10,7 +10,9 @@
     "test:single": "ng test --single-run --browsers ChromeHeadless",
     "test:single:env:test": "ng test --environment=test --single-run --browsers ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e --environment=prod"
+    "e2e": "ng e2e --environment=prod",
+    "firebase:deploy": "firebase deploy --only functions",
+    "firebase:emulate": "firebase serve --only functions"
   },
   "private": true,
   "dependencies": {

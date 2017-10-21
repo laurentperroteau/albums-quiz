@@ -48,3 +48,20 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
   });
 // [END makeUppercase]
 // [END all]
+
+exports.addKey = functions.database.ref('/albums/{pushId}')
+  .onCreate(event => {
+    // Exit when the data is deleted.
+    if (!event.data.exists()) {
+      console.log('Album not exist anymore');
+      return;
+    }
+
+    /**
+     * event.data == snapshot
+     * @url: https://firebase.google.com/docs/reference/functions/functions.database.DeltaSnapshot
+     */
+    console.log('New album key :', event.data.key);
+    console.log('Write key', event.data.key);
+    return event.data.ref.child('key').set(event.data.key);
+  });
