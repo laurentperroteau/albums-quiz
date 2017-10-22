@@ -1,4 +1,3 @@
-import * as urljoin from 'url-join';
 import * as _ from 'lodash';
 
 import { Observable  } from 'rxjs/Rx';
@@ -23,7 +22,6 @@ export class QuestionService {
   questions$: AngularFireList<Question>;
 
   constructor(
-    private _fb: FormBuilder,
     private _db: AngularFireDatabase,
     private _requestService: RequestService,
     private _userService: UserService,
@@ -32,8 +30,10 @@ export class QuestionService {
     this.questions$ = this._db.list('/' + this.node);
   }
 
+  /**
+   * @see album.service, method .add
+   */
   add(question: Question): Observable<string> {
-    // Add question...
     const newQuestion = question.updateFromFormAndReturnIt();
 
     const onGettingUser$ = this.user$.flatMap(u => {
@@ -41,9 +41,7 @@ export class QuestionService {
 
       const onAdding =
         this.questions$.push(newQuestion).then(
-          (newQuestionRef: firebase.database.ThenableReference) => {
-            return new Question(_.merge({$key: newQuestionRef.key}, newQuestion));
-          },
+          () => new Question(newQuestion),
           error => Promise.resolve(error)
         );
 
