@@ -14,8 +14,8 @@ export class CommonPage {
     return browser.get('/' + path);
   }
 
-  sleep() {
-    return browser.sleep(2000);
+  sleep(value = 2000) {
+    return browser.sleep(value);
   }
 
   debug() {

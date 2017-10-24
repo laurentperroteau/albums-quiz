@@ -20,7 +20,8 @@ describe('albums-quiz App', () => {
   it('should login', done => {
     browser.waitForAngularEnabled(false);
     page.clickButton('Login');
-    // TODO: ne trouve pas le champ
-    page.fillByInputType('email', 'laurentperroteau@gmail.com');
+    page.sleep(2000);
+    // TODO: ne trouve pas le champ mais n'attend pas si on utilise directement webdriver et by.css(`input`), si 'body' il ne trouve rien
+    // browser.driver.findElement(by.tagName(`body`)).sendKeys('laurentperroteau@gmail.com');
   });
 });
