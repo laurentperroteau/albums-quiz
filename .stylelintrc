@@ -1,0 +1,18 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "number-leading-zero": null,
+    "unit-whitelist": ["%", "px", "em", "rem", "s", "deg", "ms"],
+    "rule-empty-line-before": ["always-multi-line",
+      {
+        "expect": [
+          "after-rule"
+        ]
+      }
+    ],
+    "selector-type-no-unknown": null,
+    "color-hex-case": null,
+    "no-eol-whitespace": null,
+    "block-no-empty": false
+  }
+}
