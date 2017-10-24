@@ -1,13 +1,14 @@
 import * as _ from 'lodash';
+import { Type } from 'class-transformer';
 
 import { BaseNode, Ref } from './db.model';
 import { WithModelFactory } from './model-fatory';
 
 // TODO: add test
 export class Question extends WithModelFactory(BaseNode) {
-  '.indexOn': 'label';
+  '.indexOn': 'label'; // TODO: utile ? => se documenter
   label: string;
-  radios: QuestionRadios[];
+  @Type(() => QuestionRadios) radios: QuestionRadios[];
   radioResponse: QuestionRadios;
   userResponse: any;
   albumRef: Ref;
@@ -36,8 +37,8 @@ export class QuestionRadios {
   key: string;
   label: string;
 
-  constructor(objRaw?: Partial<QuestionRadios>) {
-    const objDefault: Partial<QuestionRadios> = {
+  constructor(objRaw?: QuestionRadios) {
+    const objDefault: QuestionRadios = {
       key: '',
       label: '',
     };

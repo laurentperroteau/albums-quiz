@@ -43,7 +43,9 @@ export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class ex
   }
 
   updateFromFormAndReturnIt() {
-    _.merge(this, this.form.value, this._extra());
+    if (this.form) {
+      _.merge(this, this.form.value);
+    }
     return this.get();
   }
 
