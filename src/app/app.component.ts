@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 import * as firebase from 'firebase/app'
 
@@ -29,7 +29,7 @@ import { UserService } from './core/services/user.service';
           Logout
         </button>
     </mat-toolbar>
-    <div>
+    <div class="app-root__content">
       <router-outlet></router-outlet>
     </div>
   `,
@@ -38,6 +38,8 @@ import { UserService } from './core/services/user.service';
   ]
 })
 export class AppComponent {
+  @HostBinding('class.app-root') componentClass = true;
+
   title = 'Albums quiz';
   user: firebase.User;
   isConnected: false;

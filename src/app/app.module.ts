@@ -14,13 +14,13 @@ import { MatToolbarModule, MatButtonModule } from '@angular/material';
 import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
+import { AppHomeComponent } from './app-home.component';
 
 // app.module.ts
 export const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: '/quiz',
-    pathMatch: 'full'
+    component: AppHomeComponent,
   },
   {
     path: 'bo',
@@ -34,7 +34,8 @@ export const ROUTES: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppHomeComponent,
   ],
   imports: [
     BrowserAnimationsModule,
