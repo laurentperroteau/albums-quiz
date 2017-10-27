@@ -11,7 +11,7 @@ import { AlbumsService } from '../../core/services/album.service';
   template: `
     <ul>
       <li *ngFor="let album of albumsByUser$ | async ">
-        <a [routerLink]="linkPush(baseLink, album.$key)">
+        <a [routerLink]="linkPush(baseLink, album.ref)">
           {{ album.name }} ({{ album.year }})
         </a>
       </li>

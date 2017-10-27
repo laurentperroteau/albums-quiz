@@ -12,7 +12,7 @@ import { Question } from '../../core/models/question.model';
   template: `
     <ul>
       <li *ngFor="let question of questionsByAlbum$ | async ">
-        <a [routerLink]="linkPush(baseLink, question.$key)">
+        <a [routerLink]="linkPush(baseLink, question.ref)">
           {{ question.label }}
         </a>
       </li>
