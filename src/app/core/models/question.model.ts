@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 
 import { BaseNode, Ref } from './db.model';
 import { WithModelFactory } from './model-fatory';
+import { FormArray, FormBuilder } from '@angular/forms';
 
 // TODO: add test
 export class Question extends WithModelFactory(BaseNode) {
@@ -30,6 +31,17 @@ export class Question extends WithModelFactory(BaseNode) {
   isResponseValid() {
     this.updateFromFormAndReturnIt();
     return this.radioResponse === _.get(this.userResponse, 'key');
+  }
+
+  addRadio(fbInstance: FormBuilder) {
+    const newRadio = new QuestionRadios();
+    this.radios.push(newRadio);
+
+    if (this.form) {
+      // TODO: map constrols
+      (this.form.controls.radios as FormArray).push(this.createGroup(fbInstance, newRadio));
+      console.log(this.form.controls.radios);
+    }
   }
 }
 

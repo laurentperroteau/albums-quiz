@@ -2,65 +2,68 @@ import * as _ from 'lodash';
 
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-type FormGroupOrControl = FormGroup | FormControl | FormArray;
-interface ModelToForm {
-  [key: string]: FormGroupOrControl;
-}
-export type ControlCallback = (key: string, control: FormControl | FormArray) => void;
+export namespace ModelToForm {
+  type FormGroupOrControl = FormGroup | FormControl | FormArray;
 
-// TODO: créer helper et TU
-function isObjectNotArray(obj: any) {
-  return _.isObject(obj) && !_.isArray(obj)
-}
+  interface ModelToForm {
+    [key: string]: FormGroupOrControl;
+  }
 
-export function convertModelToForm(
-  Obj: any,
-  fbInstance: FormBuilder,
-  propertiesToIgnore = [],
-  additionalActionOnControl?: ControlCallback,
-): ModelToForm {
-  const form: ModelToForm = {};
+  export type ControlCallback = (key: string, control: FormControl | FormArray) => void;
 
-  Object.keys(Obj).forEach((key: string) => {
-    if (propertiesToIgnore.indexOf(key) === -1) {
-      if (isObjectNotArray(Obj[key])) {
-        form[key] = fbInstance.group(convertModelToForm(Obj[key], fbInstance, propertiesToIgnore, additionalActionOnControl));
-      } else {
-        form[key] = convertDataToControl(Obj[key], key, fbInstance, propertiesToIgnore, additionalActionOnControl);
-      }
-    }
-  });
+  export const convertModelToForm = (
+    Obj: any,
+    fbInstance: FormBuilder,
+    propertiesToIgnore = [],
+    additionalActionOnControl?: ControlCallback
+  ): ModelToForm => {
+    const form: ModelToForm = {};
 
-  return form;
-}
-
-function convertDataToControl(
-  data: any,
-  key: string,
-  fbInstance: FormBuilder,
-  propertiesToIgnore = [],
-  additionalActionOnControl?: ControlCallback,
-) {
-  let control: FormControl | FormArray;
-
-  if (_.isArray(data)) {
-    const arrayControl: FormGroupOrControl[] = [];
-    data.forEach(item => {
-      if (isObjectNotArray(item)) {
-        arrayControl.push(fbInstance.group(convertModelToForm(item, fbInstance, propertiesToIgnore, additionalActionOnControl)));
-      } else {
-        arrayControl.push(convertDataToControl(item, key, fbInstance, propertiesToIgnore, additionalActionOnControl));
+    Object.keys(Obj).forEach((key: string) => {
+      if (propertiesToIgnore.indexOf(key) === -1) {
+        if (isObjectNotArray(Obj[key])) {
+          form[key] = fbInstance.group(convertModelToForm(Obj[key], fbInstance, propertiesToIgnore, additionalActionOnControl));
+        } else {
+          form[key] = convertDataToControl(Obj[key], key, fbInstance, propertiesToIgnore, additionalActionOnControl);
+        }
       }
     });
 
-    control = fbInstance.array(arrayControl);
-  } else {
-    control = fbInstance.control(data);
-  }
+    return form;
+  };
 
-  if (additionalActionOnControl) {
-    additionalActionOnControl(key, control);
-  }
+  const convertDataToControl = (
+    data: any,
+    key: string,
+    fbInstance: FormBuilder,
+    propertiesToIgnore = [],
+    additionalActionOnControl?: ControlCallback,
+  ) => {
+    let control: FormControl | FormArray;
 
-  return control;
+    if (_.isArray(data)) {
+      const arrayControl: FormGroupOrControl[] = [];
+      data.forEach(item => {
+        if (isObjectNotArray(item)) {
+          arrayControl.push(fbInstance.group(convertModelToForm(item, fbInstance, propertiesToIgnore, additionalActionOnControl)));
+        } else {
+          arrayControl.push(convertDataToControl(item, key, fbInstance, propertiesToIgnore, additionalActionOnControl));
+        }
+      });
+
+      control = fbInstance.array(arrayControl);
+    } else {
+      control = fbInstance.control(data);
+    }
+
+    if (additionalActionOnControl) {
+      additionalActionOnControl(key, control);
+    }
+
+    return control;
+  };
+
+  const isObjectNotArray = (obj: any) => {
+    return _.isObject(obj) && !_.isArray(obj)
+  }
 }

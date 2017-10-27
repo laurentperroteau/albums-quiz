@@ -18,6 +18,9 @@ import { Question } from '../../core/models/question.model';
               Clé : <input formControlName="key"/>
               Valeur : <input formControlName="label"/>
             </div>
+            <button (click)="addRadio()" mat-fab color="primary">
+              <mat-icon>add</mat-icon>
+            </button>
           </li>
         </ul>
         Clé de la réponse : <input formControlName="radioResponse"/>
@@ -54,6 +57,10 @@ export class BoQuestionFormComponent implements OnInit, OnChanges {
         this.question.createForm(this._fb);
       }
     }
+  }
+
+  addRadio() {
+    this.question.addRadio(this._fb);
   }
 
   submit() {

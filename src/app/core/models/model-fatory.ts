@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { AngularFireObject } from 'angularfire2/database';
 
-import { convertModelToForm } from '../helpers/convert-model-to-form';
+import { ModelToForm } from '../helpers/convert-model-to-form';
 
 type Constructor<T> = new(...args: any[]) => T;
 
@@ -25,7 +25,16 @@ export const WithModelFactory = <T extends Constructor<{}>>(Base: T) => class ex
   }
 
   createForm(fbInstance: FormBuilder) {
-    this.form = fbInstance.group(convertModelToForm(this, fbInstance, ['obs$']));
+    this.form = fbInstance.group(ModelToForm.convertModelToForm(this, fbInstance, ['obs$']));
+  }
+
+  createGroup(fbInstance: FormBuilder, obj) {
+    console.log(ModelToForm.convertModelToForm(obj, fbInstance));
+    return fbInstance.group(ModelToForm.convertModelToForm(obj, fbInstance));
+  }
+
+  createControl(fbInstance: FormBuilder, data) {
+    return fbInstance.control(data);
   }
 
   updateForm(fbInstance: FormBuilder) {
