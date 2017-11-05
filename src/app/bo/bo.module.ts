@@ -13,12 +13,13 @@ import { BoAlbumFormComponent } from './album/album-form.component';
 import { BoQuestionComponent } from './question/question.component';
 import { BoQuestionFormComponent } from './question/question-form.component';
 
+import { AuthGuard } from '../core/services/auth-guard.service';
 
 // routes
 export const ROUTES: Routes = [
-  { path: '', component: BoHomeComponent },
-  { path: 'edit/:refAlbum', component: BoAlbumComponent },
-  { path: 'edit/:refAlbum/question/edit/:refQuestion', component: BoQuestionComponent },
+  { path: '', component: BoHomeComponent, canActivate: [AuthGuard] },
+  { path: 'edit/:refAlbum', component: BoAlbumComponent, canActivate: [AuthGuard] },
+  { path: 'edit/:refAlbum/question/edit/:refQuestion', component: BoQuestionComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
